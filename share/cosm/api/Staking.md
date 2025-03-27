@@ -177,6 +177,35 @@ function initialize(
 ```
 
 
+### getStakeInfo (0xc3453153)
+
+```solidity
+function getStakeInfo(
+    address _user
+)
+    external
+    view
+    returns (uint256 principalAmt, uint256 interest, uint256 sCSMInWarmup)
+```
+
+获取质押信息
+
+
+Parameters:
+
+| Name  | Type    | Description |
+| :---- | :------ | :---------- |
+| _user | address | 用户地址        |
+
+
+Return values:
+
+| Name         | Type    | Description    |
+| :----------- | :------ | :------------- |
+| principalAmt | uint256 | 质押本金           |
+| interest     | uint256 | 收益             |
+| sCSMInWarmup | uint256 | warmup中的sCSM数量 |
+
 ### stake (0x7acb7757)
 
 ```solidity
