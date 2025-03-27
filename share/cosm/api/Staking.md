@@ -183,33 +183,38 @@ function initialize(
 function stake(uint256 _amount, address _recipient) external returns (bool)
 ```
 
-stake CSM to enter warmup
-        @param _amount uint
-        @return bool
+质押CSM，进入Warmup
+
+
+Parameters:
+
+| Name       | Type    | Description       |
+| :--------- | :------ | :---------------- |
+| _amount    | uint256 | 质押数量              |
+| _recipient | address | CSM的owner @return |
+
 ### claim (0x1e83409a)
 
 ```solidity
 function claim(address _recipient) external
 ```
 
-retrieve sCSM from warmup
-        @param _recipient address
+从Warmup中领取sCSM
+
+
+Parameters:
+
+| Name       | Type    | Description |
+| :--------- | :------ | :---------- |
+| _recipient | address | 接受sCSM的地址   |
+
 ### forfeit (0xf3d86e4a)
 
 ```solidity
 function forfeit() external
 ```
 
-forfeit sCSM in warmup and retrieve CSM
-### unstakePrincipal (0x25dc76ca)
-
-```solidity
-function unstakePrincipal(uint256 _amount, bool _trigger) external
-```
-
-redeem sCSM for CSM
-        @param _amount uint
-        @param _trigger bool
+强制收回CSM
 ### unstake (0x88cc9bd6)
 
 ```solidity
@@ -222,6 +227,18 @@ function unstake(
 ) external
 ```
 
+取消质押。可以选择取消本金质押或释放收益。
+
+
+Parameters:
+
+| Name          | Type    | Description       |
+| :------------ | :------ | :---------------- |
+| _amount       | uint256 | unstake的数量        |
+| _trigger      | bool    | 是否尝试触发rebase      |
+| _isPrincipal  | bool    | 是否为取消本金质押         |
+| _burnAmt      | uint256 | 释放收益所需要销毁的数量      |
+| _releaseLevel | uint256 | 释放等级。1~5对应150天到7天 |
 
 ### toggleDepositLock (0x8f077b83)
 
@@ -252,7 +269,14 @@ function contractBalance() public view returns (uint256)
 ```
 
 returns contract CSM holdings, including bonuses provided
-        @return uint
+
+
+Return values:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| [0]  | uint256 | uint 合约余额   |
+
 ### giveLockBonus (0x03c23670)
 
 ```solidity
