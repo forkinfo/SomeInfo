@@ -225,9 +225,27 @@ function initialize(address _destructionReceiver) public initializer
 ### getInfo (0xffdd5cf1)
 
 ```solidity
-function getInfo(address user_) external view returns (uint256, uint256)
+function getInfo(
+    address user_
+) external view returns (uint256 stakeBase_, uint256 contributorFactor_)
 ```
 
+获取社区信息
+
+
+Parameters:
+
+| Name  | Type    | Description |
+| :---- | :------ | :---------- |
+| user_ | address | 用户地址        |
+
+
+Return values:
+
+| Name               | Type    | Description |
+| :----------------- | :------ | :---------- |
+| stakeBase_         | uint256 | 质押基数        |
+| contributorFactor_ | uint256 | 能量因子        |
 
 ### startRelease (0xb9f6d694)
 
@@ -251,6 +269,16 @@ function levelup(
 ) external payable
 ```
 
+为释放中的收益，提高释放等级。
+
+
+Parameters:
+
+| Name          | Type    | Description       |
+| :------------ | :------ | :---------------- |
+| index_        | uint256 | 收益序号              |
+| burnAmt_      | uint256 | 释放收益所需要销毁的数量      |
+| releaseLevel_ | uint64  | 释放等级。1~5对应150天到7天 |
 
 ### claim (0xaad3ec96)
 
@@ -258,6 +286,15 @@ function levelup(
 function claim(address user_, uint256 index_) external
 ```
 
+领取释放结束的收益
+
+
+Parameters:
+
+| Name   | Type    | Description |
+| :----- | :------ | :---------- |
+| user_  | address | 用户地址        |
+| index_ | uint256 | 收益序号        |
 
 ### claimAll (0xd1058e59)
 
@@ -265,7 +302,7 @@ function claim(address user_, uint256 index_) external
 function claimAll() external
 ```
 
-
+领取所有释放结束的收益， TODO：这个待定
 ### getDestructionAmount (0xea474720)
 
 ```solidity
@@ -274,6 +311,21 @@ function getDestructionAmount(
 ) external view returns (ReleasePool.RetDestruction[] memory amountList_)
 ```
 
+根据指定收益数量，获取所有天数对应的销毁数量
+
+
+Parameters:
+
+| Name    | Type    | Description |
+| :------ | :------ | :---------- |
+| amount_ | uint256 | 收益数量        |
+
+
+Return values:
+
+| Name        | Type                                | Description               |
+| :---------- | :---------------------------------- | :------------------------ |
+| amountList_ | struct ReleasePool.RetDestruction[] | 销毁信息的数组，元素为RetDestruction |
 
 ### getUserRecords (0x51096b02)
 
@@ -283,6 +335,21 @@ function getUserRecords(
 ) external view returns (ReleasePool.Record[] memory rList_)
 ```
 
+获取用户的收益释放列表
+
+
+Parameters:
+
+| Name  | Type    | Description |
+| :---- | :------ | :---------- |
+| user_ | address | 用户地址        |
+
+
+Return values:
+
+| Name   | Type                        | Description      |
+| :----- | :-------------------------- | :--------------- |
+| rList_ | struct ReleasePool.Record[] | 收益列表信息，元素为Record |
 
 ### setInterestDestructionConfig (0xc2a56914)
 
