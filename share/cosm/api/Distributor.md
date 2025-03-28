@@ -34,10 +34,10 @@ struct Adjust {
 
 ## State variables info
 
-### CSM (0x8de2b272)
+### sCSM (0x63032870)
 
 ```solidity
-address immutable CSM
+address immutable sCSM
 ```
 
 
@@ -81,7 +81,7 @@ struct Distributor.Info[] info
 ### constructor
 
 ```solidity
-constructor(address _treasury, address _csm, uint256 _epochLength)
+constructor(address _treasury, address _scsm, uint256 _epochLength)
 ```
 
 

@@ -5,7 +5,7 @@
 #### License: GPL-3.0
 
 ```solidity
-contract Community is Initializable
+contract Community is OwnableUpgradeable
 ```
 
 
@@ -15,6 +15,15 @@ contract Community is Initializable
 
 ```solidity
 event EventAddReferrer(address user, address referrer)
+```
+
+
+## Constants info
+
+### ROOT (0x5909c12f)
+
+```solidity
+address constant ROOT = address(0x01)
 ```
 
 

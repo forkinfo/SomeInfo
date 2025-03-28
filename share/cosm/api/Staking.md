@@ -60,7 +60,7 @@ event Staked(address indexed staker, uint256 amount)
 ### Unstaked
 
 ```solidity
-event Unstaked(address indexed staker, bool isPrincipal, uint256 unstakeAmount)
+event Unstaked(address indexed staker, uint256 unstakeAmount)
 ```
 
 
@@ -78,12 +78,26 @@ event Forfeited(address indexed staker, uint256 amount)
 ```
 
 
+### EventStartClaimInterest
+
+```solidity
+event EventStartClaimInterest(address indexed staker, uint256 amount)
+```
+
+
 ## State variables info
 
 ### RELEASE_POOL (0x0119d777)
 
 ```solidity
 contract IReleasePool immutable RELEASE_POOL
+```
+
+
+### WBNB (0x8dd95002)
+
+```solidity
+address immutable WBNB
 ```
 
 
@@ -162,7 +176,7 @@ mapping(address => uint256) principals
 ### constructor
 
 ```solidity
-constructor(address _CSM, address _sCSM, address _releasePool)
+constructor(address _CSM, address _sCSM, address _WBNB, address _releasePool)
 ```
 
 
@@ -206,6 +220,13 @@ Return values:
 | interest     | uint256 | 收益             |
 | sCSMInWarmup | uint256 | warmup中的sCSM数量 |
 
+### getStakeAmount (0x0c2eb403)
+
+```solidity
+function getStakeAmount(address _user) public view returns (uint256)
+```
+
+获取质押数量
 ### stake (0x7acb7757)
 
 ```solidity
@@ -244,28 +265,42 @@ function forfeit() external
 ```
 
 强制收回CSM
-### unstake (0x88cc9bd6)
+### unstake (0xcf459636)
 
 ```solidity
-function unstake(
-    uint256 _amount,
+function unstake(bool _trigger, uint256 _amount) external
+```
+
+unstake 本金
+
+
+Parameters:
+
+| Name     | Type    | Description   |
+| :------- | :------ | :------------ |
+| _trigger | bool    | 是否尝试触发rebase  |
+| _amount  | uint256 | unstake的数量    |
+
+### claimInterest (0x04c9e989)
+
+```solidity
+function claimInterest(
     bool _trigger,
-    bool _isPrincipal,
+    uint256 _amount,
     uint256 _burnAmt,
     uint256 _releaseLevel
 ) external
 ```
 
-取消质押。可以选择取消本金质押或释放收益。
+开始释放Staking收益。
 
 
 Parameters:
 
 | Name          | Type    | Description       |
 | :------------ | :------ | :---------------- |
-| _amount       | uint256 | unstake的数量        |
 | _trigger      | bool    | 是否尝试触发rebase      |
-| _isPrincipal  | bool    | 是否为取消本金质押         |
+| _amount       | uint256 | 释放的收益数量           |
 | _burnAmt      | uint256 | 释放收益所需要销毁的数量      |
 | _releaseLevel | uint256 | 释放等级。1~5对应150天到7天 |
 
@@ -283,7 +318,14 @@ function index() public view returns (uint256)
 ```
 
 returns the sCSM index, which tracks rebase growth
-        @return uint
+
+
+Return values:
+
+| Name | Type    | Description        |
+| :--- | :------ | :----------------- |
+| [0]  | uint256 | uint256 sCSM的index |
+
 ### rebase (0xaf14052c)
 
 ```solidity
@@ -313,7 +355,14 @@ function giveLockBonus(uint256 _amount) external
 ```
 
 provide bonus to locked staking contract
-        @param _amount uint
+
+
+Parameters:
+
+| Name    | Type    | Description |
+| :------ | :------ | :---------- |
+| _amount | uint256 | uint        |
+
 ### returnLockBonus (0xf62ae76a)
 
 ```solidity
@@ -321,7 +370,14 @@ function returnLockBonus(uint256 _amount) external
 ```
 
 reclaim bonus from locked staking contract
-        @param _amount uint
+
+
+Parameters:
+
+| Name    | Type    | Description |
+| :------ | :------ | :---------- |
+| _amount | uint256 | uint        |
+
 ### setContract (0x865e6fd3)
 
 ```solidity
