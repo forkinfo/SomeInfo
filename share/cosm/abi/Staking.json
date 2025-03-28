@@ -13,12 +13,36 @@
       },
       {
         "internalType": "address",
+        "name": "_WBNB",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_releasePool",
         "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EventStartClaimInterest",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -120,12 +144,6 @@
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "isPrincipal",
-        "type": "bool"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "unstakeAmount",
         "type": "uint256"
@@ -161,6 +179,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "WBNB",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -169,6 +200,34 @@
       }
     ],
     "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_trigger",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_burnAmt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_releaseLevel",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimInterest",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -232,6 +291,25 @@
     "name": "forfeit",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getStakeAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -488,28 +566,13 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
         "internalType": "bool",
         "name": "_trigger",
         "type": "bool"
       },
       {
-        "internalType": "bool",
-        "name": "_isPrincipal",
-        "type": "bool"
-      },
-      {
         "internalType": "uint256",
-        "name": "_burnAmt",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_releaseLevel",
+        "name": "_amount",
         "type": "uint256"
       }
     ],
