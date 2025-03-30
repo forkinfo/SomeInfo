@@ -501,16 +501,16 @@ Return values:
 | :----- | :-------------------------- | :--------------- |
 | rList_ | struct ReleasePool.Record[] | 收益列表信息，元素为Record |
 
-### getUserConstribtionRecords (0x198be4a3)
+### getUserContributionRecords (0xc4b04cf6)
 
 ```solidity
-function getUserConstribtionRecords(
+function getUserContributionRecords(
     address user_,
     address burnToken_
 ) external view returns (ReleasePool.Record[] memory rList_)
 ```
 
-获取用户的Constribution收益释放列表
+获取用户的Contribution收益释放列表
 
 
 Parameters:
