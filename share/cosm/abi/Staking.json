@@ -20,10 +20,52 @@
         "internalType": "address",
         "name": "_releasePool",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_pairCSMUSDT",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curEpochNumber",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "profit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nextProfit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "stakingCSMBalance",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sCSMCirculatingSupply",
+        "type": "uint256"
+      }
+    ],
+    "name": "EventRebase",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -155,6 +197,19 @@
   {
     "inputs": [],
     "name": "CSM",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PAIR_CSM_USDT",
     "outputs": [
       {
         "internalType": "address",
@@ -335,6 +390,25 @@
       {
         "internalType": "uint256",
         "name": "sCSMInWarmup",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getStakeTokenWorth",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
         "type": "uint256"
       }
     ],
