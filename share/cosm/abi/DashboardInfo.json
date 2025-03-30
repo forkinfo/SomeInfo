@@ -1,0 +1,155 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "getChartsInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "circulatingWorthCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "treasuryRFV",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "treasuryLPRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "stakedCSMRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "runwayDay",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "treasuryAssetTotal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalCSMBurning",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "overview",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "priceCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "circulatingCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "stakedCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bondUSDT",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bondLPWorth",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
