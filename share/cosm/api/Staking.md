@@ -85,12 +85,38 @@ event EventStartClaimInterest(address indexed staker, uint256 amount)
 ```
 
 
+### EventRebase
+
+```solidity
+event EventRebase(uint256 curEpochNumber, uint256 profit, uint256 nextProfit, uint256 stakingCSMBalance, uint256 sCSMCirculatingSupply)
+```
+
+rebase数据
+
+
+Parameters:
+
+| Name                  | Type    | Description           |
+| :-------------------- | :------ | :-------------------- |
+| curEpochNumber        | uint256 | 当前epoch序号             |
+| profit                | uint256 | 本次rebase总发放收益         |
+| nextProfit            | uint256 | 下次rebase预计发放收益        |
+| stakingCSMBalance     | uint256 | 当前Staking中CSM的存量      |
+| sCSMCirculatingSupply | uint256 | 当前sCSM的circulation供应量 |
+
 ## State variables info
 
 ### RELEASE_POOL (0x0119d777)
 
 ```solidity
 contract IReleasePool immutable RELEASE_POOL
+```
+
+
+### PAIR_CSM_USDT (0x428916ac)
+
+```solidity
+address immutable PAIR_CSM_USDT
 ```
 
 
@@ -176,7 +202,13 @@ mapping(address => uint256) principals
 ### constructor
 
 ```solidity
-constructor(address _CSM, address _sCSM, address _WBNB, address _releasePool)
+constructor(
+    address _CSM,
+    address _sCSM,
+    address _WBNB,
+    address _releasePool,
+    address _pairCSMUSDT
+)
 ```
 
 
@@ -227,6 +259,13 @@ function getStakeAmount(address _user) public view returns (uint256)
 ```
 
 获取质押数量
+### getStakeTokenWorth (0x76e50cf9)
+
+```solidity
+function getStakeTokenWorth(address _user) public view returns (uint256)
+```
+
+获取质押CSM的USD价值
 ### stake (0x7acb7757)
 
 ```solidity
