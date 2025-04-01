@@ -689,6 +689,34 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getBondSoldInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_bondPriceInCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_bondPriceInU",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_totalDebt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxDebt",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
