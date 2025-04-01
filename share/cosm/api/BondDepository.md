@@ -68,6 +68,20 @@ struct Adjust {
 ```
 
 
+### RetBondInfo
+
+```solidity
+struct RetBondInfo {
+	uint256 id;
+	address owner;
+	uint256 payout;
+	uint256 vesting;
+	uint256 claimable;
+	uint256 pricePaid;
+}
+```
+
+
 ## Events info
 
 ### BondDeposit
@@ -478,6 +492,7 @@ function getBondBuyInfo()
     public
     view
     returns (
+        uint256 _bondPriceInCSM,
         uint256 _bondPriceInU,
         uint256 _maxQuantity,
         uint256 _debtRatio,
@@ -490,12 +505,61 @@ function getBondBuyInfo()
 
 Return values:
 
-| Name          | Type    | Description                                  |
-| :------------ | :------ | :------------------------------------------- |
-| _bondPriceInU | uint256 | bond的USDT价格,roi = csm price / _bondPriceInU  |
-| _maxQuantity  | uint256 | 最大可购买的CSM数量                                  |
-| _debtRatio    | uint256 | DebtRatio，精度9                                |
-| _vestionTerm  | uint256 | 线性释放块数                                       |
+| Name            | Type    | Description                                  |
+| :-------------- | :------ | :------------------------------------------- |
+| _bondPriceInCSM | uint256 | bond的CSM价格                                   |
+| _bondPriceInU   | uint256 | bond的USDT价格,roi = csm price / _bondPriceInU  |
+| _maxQuantity    | uint256 | 最大可购买的CSM数量                                  |
+| _debtRatio      | uint256 | DebtRatio，精度9                                |
+| _vestionTerm    | uint256 | 线性释放块数                                       |
+
+### getBondInfoList (0x204cb0fa)
+
+```solidity
+function getBondInfoList(
+    address _user
+) public view returns (BondDepository.RetBondInfo[] memory _infoList)
+```
+
+获取用户的bond列表
+
+
+Parameters:
+
+| Name  | Type    | Description |
+| :---- | :------ | :---------- |
+| _user | address | 用户地址        |
+
+
+Return values:
+
+| Name      | Type                                | Description                                                                                                                                                                                                                                                         |
+| :-------- | :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| _infoList | struct BondDepository.RetBondInfo[] | bond列表，元素是RetBondInfo。 struct RetBondInfo { uint256 id; // id of bond depositor address owner; // address of bond depositor uint256 payout; // pending uint256 vesting; // 还剩多少块 uint256 claimable;  // 可领取数量 uint256 pricePaid; // In USD, for front end viewing } |
+
+### getInviteBondInfo (0x0d7e9148)
+
+```solidity
+function getInviteBondInfo(
+    address _user
+) public view returns (BondDepository.RetBondInfo memory _inviteBondInfo)
+```
+
+获取用户的invite bond数据
+
+
+Parameters:
+
+| Name  | Type    | Description |
+| :---- | :------ | :---------- |
+| _user | address | 用户地址        |
+
+
+Return values:
+
+| Name            | Type                              | Description                                                                                                                                                                                                                                                         |
+| :-------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| _inviteBondInfo | struct BondDepository.RetBondInfo | bond数据，类型是RetBondInfo。 struct RetBondInfo { uint256 id; // id of bond depositor address owner; // address of bond depositor uint256 payout; // pending uint256 vesting; // 还剩多少块 uint256 claimable;  // 可领取数量 uint256 pricePaid; // In USD, for front end viewing } |
 
 ### estimateGetCSM (0x23fdd7a9)
 
