@@ -8,7 +8,8 @@
 contract BondDepository is OwnableUpgradeable
 ```
 
-
+一个Bond是一个CSM的线性释放。购买一个Bond，可能需要价值n个CSM，这个n就是BondPrice。
+购买一个Bond之后，它立刻就会线性释放一个CSM。
 ## Enums info
 
 ### PARAMETER
@@ -246,6 +247,13 @@ uint256 needStakeAmount
 ```
 
 
+### inviteBond (0x529fbd86)
+
+```solidity
+mapping(address => struct BondDepository.Bond) inviteBond
+```
+
+
 ## Functions info
 
 ### constructor
@@ -413,13 +421,6 @@ Return values:
 | :--- | :------ | :---------- |
 | [0]  | uint256 | uint        |
 
-### getMembers (0x78544629)
-
-```solidity
-function getMembers(address _depositor) public view returns (address)
-```
-
-
 ### redeem (0x4458a14c)
 
 ```solidity
@@ -448,13 +449,90 @@ Return values:
 | :--- | :------ | :---------- |
 | [0]  | uint256 | uint        |
 
+### redeemForInviteBond (0xb6904c41)
+
+```solidity
+function redeemForInviteBond(address _recipient) public returns (uint256)
+```
+
+redeem invite bond for user
+
+
+Parameters:
+
+| Name       | Type    | Description |
+| :--------- | :------ | :---------- |
+| _recipient | address | address     |
+
+
+Return values:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| [0]  | uint256 | uint        |
+
+### getBondBuyInfo (0x69a6cabc)
+
+```solidity
+function getBondBuyInfo()
+    public
+    view
+    returns (
+        uint256 _bondPriceInU,
+        uint256 _maxQuantity,
+        uint256 _debtRatio,
+        uint256 _vestionTerm
+    )
+```
+
+获取购买bond时的信息
+
+
+Return values:
+
+| Name          | Type    | Description                                  |
+| :------------ | :------ | :------------------------------------------- |
+| _bondPriceInU | uint256 | bond的USDT价格,roi = csm price / _bondPriceInU  |
+| _maxQuantity  | uint256 | 最大可购买的CSM数量                                  |
+| _debtRatio    | uint256 | DebtRatio，精度9                                |
+| _vestionTerm  | uint256 | 线性释放块数                                       |
+
+### estimateGetCSM (0x23fdd7a9)
+
+```solidity
+function estimateGetCSM(uint256 _amount) public view returns (uint256 payout)
+```
+
+获取Bond的预估购买到CSM数量
+
+
+Parameters:
+
+| Name    | Type    | Description |
+| :------ | :------ | :---------- |
+| _amount | uint256 | token的数量    |
+
+
+Return values:
+
+| Name   | Type    | Description |
+| :----- | :------ | :---------- |
+| payout | uint256 | CSM的数量      |
+
+### getMembers (0x78544629)
+
+```solidity
+function getMembers(address _depositor) public view returns (address)
+```
+
+
 ### maxPayout (0xe0176de8)
 
 ```solidity
 function maxPayout() public view returns (uint256)
 ```
 
-determine maximum bond size
+当前最大可购买数量
 
 
 Return values:
@@ -473,6 +551,7 @@ calculate interest due for new bond
 
 BondExecutingPrice_toCSM = ( Value / Premium )
                     = (value * 1e18 / (premium percent * 100)) / 1e18 * 100
+             总共CSM的数量为_value, 一个bond可以换`bondPrice()`个CSM，返回可以换到多少CSM。
 
 
 Parameters:
@@ -494,7 +573,7 @@ Return values:
 function bondPrice() public view returns (uint256 price_)
 ```
 
-calculate current bond premium
+calculate current bond premium, 一个bond价值几个CSMM， 1个？or price个。
 
 price = premium = 100% + (debtRadio * BCV)
              = (1e9 + (tokenDebt/tokenSupply * 1e9 * BCV)) / 1e7
@@ -531,19 +610,21 @@ function getNewBCV(uint256 _price) public view returns (uint256 _newbcv)
 
 get new bvc
 
+(BCV * debtRatio) + 1， 表示1个bond值几个CSM。
+
 
 Parameters:
 
-| Name   | Type    | Description |
-| :----- | :------ | :---------- |
-| _price | uint256 | uint        |
+| Name   | Type    | Description                                                      |
+| :----- | :------ | :--------------------------------------------------------------- |
+| _price | uint256 | uint 一个Bond的USD价值，markdown为一个CSM的USD价值。_price/markdown = 几个CSM。  |
 
 
 Return values:
 
-| Name    | Type    | Description |
-| :------ | :------ | :---------- |
-| _newbcv | uint256 | uint        |
+| Name    | Type    | Description                            |
+| :------ | :------ | :------------------------------------- |
+| _newbcv | uint256 | uint 控制Bond的未释放比例，对一个bond可以兑换的CSM数量的影响 |
 
 ### getNewPrice (0x6e5bf8e7)
 
@@ -563,9 +644,9 @@ Parameters:
 
 Return values:
 
-| Name      | Type    | Description |
-| :-------- | :------ | :---------- |
-| _newPrice | uint256 | uint        |
+| Name      | Type    | Description       |
+| :-------- | :------ | :---------------- |
+| _newPrice | uint256 | uint 一个bond的USD价格 |
 
 ### debtRatio (0xcea55f57)
 
@@ -627,12 +708,13 @@ Return values:
 | :----- | :------ | :---------- |
 | decay_ | uint256 | uint        |
 
-### percentVestedFor (0x6e979c6a)
+### percentVestedFor (0x713208ed)
 
 ```solidity
 function percentVestedFor(
     address _depositor,
-    uint256 _id
+    uint256 _id,
+    bool _invite
 ) public view returns (uint256 percentVested_)
 ```
 
@@ -641,10 +723,11 @@ calculate how far into vesting a depositor is
 
 Parameters:
 
-| Name       | Type    | Description      |
-| :--------- | :------ | :--------------- |
-| _depositor | address | address          |
-| _id        | uint256 | uint256 bond id  |
+| Name       | Type    | Description          |
+| :--------- | :------ | :------------------- |
+| _depositor | address | address              |
+| _id        | uint256 | uint256 bond id      |
+| _invite    | bool    | bool is invite bond  |
 
 
 Return values:
@@ -680,6 +763,30 @@ Return values:
 | Name           | Type    | Description |
 | :------------- | :------ | :---------- |
 | pendingPayout_ | uint256 | uint        |
+
+### getStakedAmount (0x4da6a556)
+
+```solidity
+function getStakedAmount(
+    address _address
+) public view returns (uint256 _stakedAmount)
+```
+
+cllculate amount of address staked sCSM
+
+
+Parameters:
+
+| Name     | Type    | Description |
+| :------- | :------ | :---------- |
+| _address | address | address     |
+
+
+Return values:
+
+| Name          | Type    | Description |
+| :------------ | :------ | :---------- |
+| _stakedAmount | uint256 | uint        |
 
 ### recoverLostToken (0xb4abccba)
 
