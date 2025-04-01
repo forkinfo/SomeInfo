@@ -513,6 +513,32 @@ Return values:
 | _debtRatio      | uint256 | DebtRatio，精度9                                |
 | _vestionTerm    | uint256 | 线性释放块数                                       |
 
+### getBondSoldInfo (0x7ce0b651)
+
+```solidity
+function getBondSoldInfo()
+    public
+    view
+    returns (
+        uint256 _bondPriceInCSM,
+        uint256 _bondPriceInU,
+        uint256 _totalDebt,
+        uint256 _maxDebt
+    )
+```
+
+获取bond售卖时的信息
+
+
+Return values:
+
+| Name            | Type    | Description                                  |
+| :-------------- | :------ | :------------------------------------------- |
+| _bondPriceInCSM | uint256 | bond的CSM价格                                   |
+| _bondPriceInU   | uint256 | bond的USDT价格,roi = csm price / _bondPriceInU  |
+| _totalDebt      | uint256 | 当前已购买数量                                      |
+| _maxDebt        | uint256 | 购买上限                                         |
+
 ### getBondInfoList (0x204cb0fa)
 
 ```solidity
