@@ -540,6 +540,11 @@
     "outputs": [
       {
         "internalType": "uint256",
+        "name": "_bondPriceInCSM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "_bondPriceInU",
         "type": "uint256"
       },
@@ -627,6 +632,108 @@
         "internalType": "uint256",
         "name": "_length",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getBondInfoList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "payout",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vesting",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimable",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricePaid",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct BondDepository.RetBondInfo[]",
+        "name": "_infoList",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getInviteBondInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "payout",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vesting",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimable",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "pricePaid",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct BondDepository.RetBondInfo",
+        "name": "_inviteBondInfo",
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
