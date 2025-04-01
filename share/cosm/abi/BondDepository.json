@@ -518,6 +518,53 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "estimateGetCSM",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "payout",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getBondBuyInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_bondPriceInU",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxQuantity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_debtRatio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_vestionTerm",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_addr",
         "type": "address"
@@ -643,6 +690,25 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getStakedAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_stakedAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "initialize",
     "outputs": [],
@@ -700,6 +766,50 @@
     "name": "initializeBondTerms",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "inviteBond",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "payout",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "vesting",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "lastBlock",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pricePaid",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -839,6 +949,11 @@
         "internalType": "uint256",
         "name": "_id",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_invite",
+        "type": "bool"
       }
     ],
     "name": "percentVestedFor",
@@ -903,6 +1018,25 @@
       }
     ],
     "name": "redeem",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "redeemForInviteBond",
     "outputs": [
       {
         "internalType": "uint256",
