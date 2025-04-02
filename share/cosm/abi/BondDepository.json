@@ -759,9 +759,9 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct BondDepository.RetBondInfo",
-        "name": "_inviteBondInfo",
-        "type": "tuple"
+        "internalType": "struct BondDepository.RetBondInfo[]",
+        "name": "_inviteBondInfos",
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",
