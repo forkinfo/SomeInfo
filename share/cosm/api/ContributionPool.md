@@ -218,11 +218,10 @@ function receiveBondInvite(
 ```
 
 
-### claim (0x925f7edd)
+### claim (0xe08549a6)
 
 ```solidity
 function claim(
-    address account_,
     uint256 totalAmount_,
     bytes32[] calldata merkleProof_,
     address burnToken_,
@@ -238,7 +237,6 @@ Parameters:
 
 | Name          | Type      | Description |
 | :------------ | :-------- | :---------- |
-| account_      | address   | 用户          |
 | totalAmount_  | uint256   | 总奖励金额       |
 | merkleProof_  | bytes32[] | 默克尔证明       |
 | burnToken_    | address   | 销毁Token     |
