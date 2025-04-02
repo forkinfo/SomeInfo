@@ -296,11 +296,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "account_",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "totalAmount_",
         "type": "uint256"
