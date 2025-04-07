@@ -83,6 +83,12 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "epochIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "maxReward",
         "type": "uint256"
       },
@@ -102,6 +108,12 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "newRewardOffset",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "prevRewardOffset",
         "type": "uint256"
       }
     ],
@@ -421,6 +433,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "maxEpoch",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -467,7 +492,33 @@
   },
   {
     "inputs": [],
+    "name": "prevEpochRewardOffset",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "rebaseMaxContributionReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rebaseMaxContributionRewardFromPrev",
     "outputs": [
       {
         "internalType": "uint256",
@@ -561,6 +612,11 @@
       {
         "internalType": "uint256",
         "name": "newTotalReward_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "epochIndex_",
         "type": "uint256"
       }
     ],
