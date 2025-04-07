@@ -27,7 +27,7 @@ struct RootParams {
 ### EventUpdateMerkleRoot
 
 ```solidity
-event EventUpdateMerkleRoot(uint256 maxReward, bytes32 merkleRoot, uint256 newTotalReward, uint256 newRewardOffset)
+event EventUpdateMerkleRoot(uint256 epochIndex, uint256 maxReward, bytes32 merkleRoot, uint256 newTotalReward, uint256 newRewardOffset, uint256 prevRewardOffset)
 ```
 
 事件-默克尔根的更新
@@ -35,12 +35,14 @@ event EventUpdateMerkleRoot(uint256 maxReward, bytes32 merkleRoot, uint256 newTo
 
 Parameters:
 
-| Name            | Type    | Description            |
-| :-------------- | :------ | :--------------------- |
-| maxReward       | uint256 | 本次更新，理论上的总奖励上限         |
-| merkleRoot      | bytes32 | 新的默克尔根                 |
-| newTotalReward  | uint256 | root manager本次更新的奖励总额  |
-| newRewardOffset | uint256 | 本次更新过后，总奖励的累积历史偏差      |
+| Name             | Type    | Description                |
+| :--------------- | :------ | :------------------------- |
+| epochIndex       | uint256 | epoch序号                    |
+| maxReward        | uint256 | 本次更新，理论上的总奖励上限             |
+| merkleRoot       | bytes32 | 新的默克尔根                     |
+| newTotalReward   | uint256 | root manager本次更新的奖励总额      |
+| newRewardOffset  | uint256 | 本次更新过后，总奖励的累积历史偏差          |
+| prevRewardOffset | uint256 | 本次更新过后，上一轮epoch的总奖励的累积历史偏差 |
 
 ### EventClaimContributionReward
 
@@ -152,6 +154,20 @@ mapping(address => uint256) merkleClaimedAmounts
 ```
 
 用户地址=>社群奖励中已领取奖励数量
+### maxEpoch (0xf26d929e)
+
+```solidity
+uint256 maxEpoch
+```
+
+
+### prevEpochRewardOffset (0xb1ed6655)
+
+```solidity
+uint256 prevEpochRewardOffset
+```
+
+
 ## Modifiers info
 
 ### onlyRootManager
@@ -197,7 +213,24 @@ function cumulativeReward() public view returns (uint256)
 function rebaseMaxContributionReward() public view returns (uint256)
 ```
 
-新的社区奖励的最大值
+当前最新的社区奖励的最大值
+
+需要减去Bond invite奖励
+
+
+Return values:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| [0]  | uint256 | 奖励最大值       |
+
+### rebaseMaxContributionRewardFromPrev (0x745411c1)
+
+```solidity
+function rebaseMaxContributionRewardFromPrev() public view returns (uint256)
+```
+
+上轮epoch结束后的社区奖励的最大值
 
 需要减去Bond invite奖励
 
@@ -243,12 +276,13 @@ Parameters:
 | burnAmt_      | uint256   | 销毁数量        |
 | releaseLevel_ | uint256   | 释放等级        |
 
-### updateMerkleRoot (0x03c15957)
+### updateMerkleRoot (0xbe4d8f11)
 
 ```solidity
 function updateMerkleRoot(
     bytes32 merkleRoot_,
-    uint256 newTotalReward_
+    uint256 newTotalReward_,
+    uint256 epochIndex_
 ) external onlyRootManager
 ```
 
