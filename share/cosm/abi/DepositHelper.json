@@ -184,22 +184,31 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "amountUSDT_",
+        "name": "_amount",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "token_",
-        "type": "address"
       }
     ],
-    "name": "getUSDTSwapAllocation",
+    "name": "estimateGetCSM",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "payout",
         "type": "uint256"
-      },
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount_",
+        "type": "uint256"
+      }
+    ],
+    "name": "getLiquidityAddValue",
+    "outputs": [
       {
         "internalType": "uint256",
         "name": "",
