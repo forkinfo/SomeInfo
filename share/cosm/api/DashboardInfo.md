@@ -9,12 +9,122 @@ contract DashboardInfo is OwnableUpgradeable
 ```
 
 
-## Functions info
+## Enums info
 
-### initialize (0x8129fc1c)
+### CONTRACTS
 
 ```solidity
-function initialize() public initializer
+enum CONTRACTS {
+	 USDT,
+	 CSM,
+	 SCSM,
+	 LP_CSM_USDT,
+	 STAKING,
+	 RELEASEPOOL,
+	 TREASURY,
+	 DISTRIBUTOR,
+	 BONDCALCULATOR
+}
+```
+
+
+## Constants info
+
+### PRECISION (0xaaf5eb68)
+
+```solidity
+uint256 constant PRECISION = 1e4
+```
+
+
+### RATE_PRECISION (0x2b3ba681)
+
+```solidity
+uint256 constant RATE_PRECISION = 1e6
+```
+
+
+## State variables info
+
+### USDT (0xc54e44eb)
+
+```solidity
+address USDT
+```
+
+
+### CSM (0x8de2b272)
+
+```solidity
+address CSM
+```
+
+
+### sCSM (0x63032870)
+
+```solidity
+address sCSM
+```
+
+
+### LP_CSM_USDT (0xdf5f7551)
+
+```solidity
+address LP_CSM_USDT
+```
+
+
+### staking (0x4cf088d9)
+
+```solidity
+address staking
+```
+
+
+### releasePool (0x23f7f407)
+
+```solidity
+address releasePool
+```
+
+
+### treasury (0x61d027b3)
+
+```solidity
+address treasury
+```
+
+
+### distributor (0xbfe10928)
+
+```solidity
+address distributor
+```
+
+
+### bondCalculator (0xc5332b7c)
+
+```solidity
+address bondCalculator
+```
+
+
+## Functions info
+
+### initialize (0xf5e95acb)
+
+```solidity
+function initialize(
+    address _USDT,
+    address _CSM,
+    address _sCSM,
+    address _LP_CSM_USDT,
+    address _staking,
+    address _releasePool,
+    address _treasury,
+    address _distributor,
+    address _bondCalculator
+) public initializer
 ```
 
 
@@ -48,10 +158,12 @@ Return values:
 | bondUSDT       | uint256 | Bond USDT$xxxx, 精度4.              |
 | bondLPWorth    | uint256 | Bond LP$xxxx, 精度4.                |
 
-### getChartsInfo (0x9b72aea1)
+### getChartsInfo (0xb17f20ea)
 
 ```solidity
-function getChartsInfo()
+function getChartsInfo(
+    uint256 uid_
+)
     external
     view
     returns (
@@ -68,6 +180,13 @@ function getChartsInfo()
 获取图标信息
 
 
+Parameters:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| uid_ | uint256 | 项目id        |
+
+
 Return values:
 
 | Name                | Type    | Description                                  |
@@ -79,3 +198,68 @@ Return values:
 | runwayDay           | uint256 | Runway Available, 精度4                        |
 | treasuryAssetTotal  | uint256 | Market Value of Treasury Assets, 精度4         |
 | totalCSMBurning     | uint256 | Total CSM Burning, 精度9                       |
+
+### setContract (0x865e6fd3)
+
+```solidity
+function setContract(
+    DashboardInfo.CONTRACTS _contract,
+    address _address
+) external onlyOwner
+```
+
+
+### getCirculatingWorthCSM (0x51363dfe)
+
+```solidity
+function getCirculatingWorthCSM()
+    external
+    view
+    returns (uint256 circulatingWorthCSM)
+```
+
+
+### getTreasuryRFV (0x9f61a73a)
+
+```solidity
+function getTreasuryRFV() external view returns (uint256 treasuryRFV)
+```
+
+
+### getTreasuryLPRatio (0xeeeee4d4)
+
+```solidity
+function getTreasuryLPRatio() external view returns (uint256)
+```
+
+
+### getStakedCSMRatio (0xba410e67)
+
+```solidity
+function getStakedCSMRatio() external view returns (uint256)
+```
+
+
+### getRunway (0x5b6f9455)
+
+```solidity
+function getRunway() external view returns (uint256)
+```
+
+
+### getTotalCSMBurning (0xc38fb9ed)
+
+```solidity
+function getTotalCSMBurning(uint256 uid_) external view returns (uint256)
+```
+
+
+### getTreasuryAssetTotal (0x4ed3648a)
+
+```solidity
+function getTreasuryAssetTotal()
+    external
+    view
+    returns (uint256 treasuryAssetTotal)
+```
+

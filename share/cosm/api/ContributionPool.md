@@ -27,7 +27,7 @@ struct RootParams {
 ### EventUpdateMerkleRoot
 
 ```solidity
-event EventUpdateMerkleRoot(uint256 epochIndex, uint256 maxReward, bytes32 merkleRoot, uint256 newTotalReward, uint256 newRewardOffset, uint256 prevRewardOffset)
+event EventUpdateMerkleRoot(uint256 uid, uint256 epochIndex, uint256 maxReward, bytes32 merkleRoot, uint256 newTotalReward, uint256 newRewardOffset, uint256 prevRewardOffset)
 ```
 
 事件-默克尔根的更新
@@ -47,7 +47,7 @@ Parameters:
 ### EventClaimContributionReward
 
 ```solidity
-event EventClaimContributionReward(address account, uint256 userMerkleTotalReward, uint256 claimReward, uint256 merkleClaimReward, uint256 bondInviteReward)
+event EventClaimContributionReward(uint256 uid, address account, uint256 userMerkleTotalReward, uint256 claimReward, uint256 merkleClaimReward, uint256 bondInviteReward)
 ```
 
 事件-用户领取社群贡献奖励并线性释放
@@ -66,7 +66,7 @@ Parameters:
 ### EventTriggerBondInviteReward
 
 ```solidity
-event EventTriggerBondInviteReward(address recipient, uint256 triggerTime, uint256 amount)
+event EventTriggerBondInviteReward(uint256 uid, address recipient, uint256 triggerTime, uint256 amount)
 ```
 
 用户新增债券推荐奖励
@@ -112,59 +112,59 @@ address immutable CSM
 ```
 
 
-### merkleTotalClaimed (0x16c1a018)
+### merkleTotalClaimed (0x82328939)
 
 ```solidity
-uint256 merkleTotalClaimed
+mapping(uint256 => uint256) merkleTotalClaimed
 ```
 
 
-### lastRewardOffset (0x398df8b3)
+### lastRewardOffset (0x7f968dd8)
 
 ```solidity
-uint256 lastRewardOffset
+mapping(uint256 => uint256) lastRewardOffset
 ```
 
 
-### bondInviteTotalReward (0xfa190351)
+### bondInviteTotalReward (0x3ea3a5a4)
 
 ```solidity
-uint256 bondInviteTotalReward
+mapping(uint256 => uint256) bondInviteTotalReward
 ```
 
 
-### bondInviteClaimableReward (0x5903353a)
+### bondInviteClaimableReward (0x4737d7eb)
 
 ```solidity
-mapping(address => uint256) bondInviteClaimableReward
+mapping(uint256 => mapping(address => uint256)) bondInviteClaimableReward
 ```
 
-user=>未开始释放的债券推荐奖励
-### merkleRoot (0x2eb4a7ab)
+uid=>user=>未开始释放的债券推荐奖励
+### merkleRoot (0x3c70b357)
 
 ```solidity
-bytes32 merkleRoot
-```
-
-
-### merkleClaimedAmounts (0x6fddff97)
-
-```solidity
-mapping(address => uint256) merkleClaimedAmounts
-```
-
-用户地址=>社群奖励中已领取奖励数量
-### maxEpoch (0xf26d929e)
-
-```solidity
-uint256 maxEpoch
+mapping(uint256 => bytes32) merkleRoot
 ```
 
 
-### prevEpochRewardOffset (0xb1ed6655)
+### merkleClaimedAmounts (0x43029480)
 
 ```solidity
-uint256 prevEpochRewardOffset
+mapping(uint256 => mapping(address => uint256)) merkleClaimedAmounts
+```
+
+uid=>用户地址=>社群奖励中已领取奖励数量
+### maxEpoch (0x51a1e2ac)
+
+```solidity
+mapping(uint256 => uint256) maxEpoch
+```
+
+
+### prevEpochRewardOffset (0xfdbc8a8a)
+
+```solidity
+mapping(uint256 => uint256) prevEpochRewardOffset
 ```
 
 
@@ -200,17 +200,19 @@ function initialize() public initializer
 ```
 
 
-### cumulativeReward (0xc1e4db56)
+### cumulativeReward (0x68002a04)
 
 ```solidity
-function cumulativeReward() public view returns (uint256)
+function cumulativeReward(uint256 uid_) public view returns (uint256)
 ```
 
 
-### rebaseMaxContributionReward (0xb11d91b7)
+### rebaseMaxContributionReward (0x2611bf85)
 
 ```solidity
-function rebaseMaxContributionReward() public view returns (uint256)
+function rebaseMaxContributionReward(
+    uint256 uid_
+) public view returns (uint256)
 ```
 
 当前最新的社区奖励的最大值
@@ -218,16 +220,25 @@ function rebaseMaxContributionReward() public view returns (uint256)
 需要减去Bond invite奖励
 
 
+Parameters:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| uid_ | uint256 | 项目id        |
+
+
 Return values:
 
 | Name | Type    | Description |
 | :--- | :------ | :---------- |
 | [0]  | uint256 | 奖励最大值       |
 
-### rebaseMaxContributionRewardFromPrev (0x745411c1)
+### rebaseMaxContributionRewardFromPrev (0x25c6cb14)
 
 ```solidity
-function rebaseMaxContributionRewardFromPrev() public view returns (uint256)
+function rebaseMaxContributionRewardFromPrev(
+    uint256 uid_
+) public view returns (uint256)
 ```
 
 上轮epoch结束后的社区奖励的最大值
@@ -235,26 +246,35 @@ function rebaseMaxContributionRewardFromPrev() public view returns (uint256)
 需要减去Bond invite奖励
 
 
+Parameters:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| uid_ | uint256 | 项目id        |
+
+
 Return values:
 
 | Name | Type    | Description |
 | :--- | :------ | :---------- |
 | [0]  | uint256 | 奖励最大值       |
 
-### receiveBondInvite (0x561adca6)
+### receiveBondInvite (0xc9c44e63)
 
 ```solidity
 function receiveBondInvite(
+    uint256 uid_,
     address recipient_,
     uint256 amount_
 ) external onlyBondDepository
 ```
 
 
-### claim (0xe08549a6)
+### claim (0x67cb559c)
 
 ```solidity
 function claim(
+    uint256 uid_,
     uint256 totalAmount_,
     bytes32[] calldata merkleProof_,
     address burnToken_,
@@ -270,16 +290,18 @@ Parameters:
 
 | Name          | Type      | Description |
 | :------------ | :-------- | :---------- |
+| uid_          | uint256   | 项目id        |
 | totalAmount_  | uint256   | 总奖励金额       |
 | merkleProof_  | bytes32[] | 默克尔证明       |
 | burnToken_    | address   | 销毁Token     |
 | burnAmt_      | uint256   | 销毁数量        |
 | releaseLevel_ | uint256   | 释放等级        |
 
-### updateMerkleRoot (0xbe4d8f11)
+### updateMerkleRoot (0x85f15c13)
 
 ```solidity
 function updateMerkleRoot(
+    uint256 uid_,
     bytes32 merkleRoot_,
     uint256 newTotalReward_,
     uint256 epochIndex_
@@ -293,5 +315,7 @@ Parameters:
 
 | Name            | Type    | Description |
 | :-------------- | :------ | :---------- |
+| uid_            | uint256 | 项目id        |
 | merkleRoot_     | bytes32 | 默克尔根        |
 | newTotalReward_ | uint256 | 本次更新的总奖励    |
+| epochIndex_     | uint256 | epochNumber |

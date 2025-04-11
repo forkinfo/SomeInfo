@@ -20,7 +20,8 @@ enum PARAMETER {
 	 PAYOUT,
 	 FEE,
 	 DEBT,
-	 Ratio
+	 Ratio,
+	 MINIMUM_PRICE
 }
 ```
 
@@ -49,7 +50,7 @@ struct Bond {
 	uint256 id;
 	uint256 payout;
 	uint256 vesting;
-	uint256 lastBlock;
+	uint256 lastBlockTime;
 	uint256 pricePaid;
 }
 ```
@@ -87,28 +88,28 @@ struct RetBondInfo {
 ### BondDeposit
 
 ```solidity
-event BondDeposit(address indexed account, address indexed token, uint256 indexed value)
+event BondDeposit(uint256 indexed uid, address indexed account, address indexed token, uint256 value)
 ```
 
 
 ### BondCreated
 
 ```solidity
-event BondCreated(uint256 deposit, uint256 indexed payout, uint256 indexed expires, uint256 indexed priceInUSD)
+event BondCreated(uint256 indexed uid, uint256 deposit, uint256 indexed payout, uint256 indexed expires, uint256 priceInUSD)
 ```
 
 
 ### BondRedeemed
 
 ```solidity
-event BondRedeemed(address indexed recipient, uint256 payout, uint256 remaining)
+event BondRedeemed(uint256 indexed uid, address indexed recipient, uint256 payout, uint256 remaining)
 ```
 
 
 ### BondPriceChanged
 
 ```solidity
-event BondPriceChanged(uint256 indexed priceInUSD, uint256 indexed internalPrice, uint256 indexed debtRatio)
+event BondPriceChanged(uint256 indexed uid, uint256 indexed priceInUSD, uint256 indexed internalPrice, uint256 debtRatio)
 ```
 
 
@@ -226,10 +227,10 @@ mapping(uint256 => struct BondDepository.Bond) bondInfo
 ```
 
 
-### bondInfoData (0xb38069c8)
+### bondInfoData (0x14244472)
 
 ```solidity
-mapping(address => struct BondDepository.Bond[]) bondInfoData
+mapping(uint256 => mapping(address => struct BondDepository.Bond[])) bondInfoData
 ```
 
 
@@ -261,10 +262,10 @@ uint256 needStakeAmount
 ```
 
 
-### inviteBond (0x529fbd86)
+### inviteBond (0xe37f9703)
 
 ```solidity
-mapping(address => struct BondDepository.Bond) inviteBond
+mapping(uint256 => mapping(address => struct BondDepository.Bond)) inviteBond
 ```
 
 
@@ -389,28 +390,31 @@ function setNeedStakeAmount(uint256 amount) public onlyOwner
 ```
 
 
-### getBondInfoData (0x7123eab7)
+### getBondInfoData (0xd140935e)
 
 ```solidity
 function getBondInfoData(
+    uint256 _uid,
     address _addr
 ) public view returns (BondDepository.Bond[] memory)
 ```
 
 
-### getBondInfoDataLength (0x7d01a8d7)
+### getBondInfoDataLength (0x6ccc0012)
 
 ```solidity
 function getBondInfoDataLength(
+    uint256 _uid,
     address _addr
 ) public view returns (uint256 _length)
 ```
 
 
-### deposit (0x8dbdbe6d)
+### deposit (0xfad3cc4b)
 
 ```solidity
 function deposit(
+    uint256 _uid,
     uint256 _amount,
     uint256 _maxPrice,
     address _depositor
@@ -424,6 +428,7 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| _uid       | uint256 | 项目id        |
 | _amount    | uint256 | uint        |
 | _maxPrice  | uint256 | uint        |
 | _depositor | address | address     |
@@ -435,10 +440,11 @@ Return values:
 | :--- | :------ | :---------- |
 | [0]  | uint256 | uint        |
 
-### redeem (0x4458a14c)
+### redeem (0x4547c642)
 
 ```solidity
 function redeem(
+    uint256 _uid,
     address _recipient,
     uint256 _id,
     bool _stake
@@ -452,6 +458,7 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| _uid       | uint256 | 项目id        |
 | _recipient | address | address     |
 | _id        | uint256 | id of bond  |
 | _stake     | bool    | bool        |
@@ -463,10 +470,13 @@ Return values:
 | :--- | :------ | :---------- |
 | [0]  | uint256 | uint        |
 
-### redeemForInviteBond (0xb6904c41)
+### redeemForInviteBond (0x2952d976)
 
 ```solidity
-function redeemForInviteBond(address _recipient) public returns (uint256)
+function redeemForInviteBond(
+    uint256 _uid,
+    address _recipient
+) public returns (uint256)
 ```
 
 redeem invite bond for user
@@ -476,6 +486,7 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| _uid       | uint256 | 项目id        |
 | _recipient | address | address     |
 
 
@@ -539,10 +550,11 @@ Return values:
 | _totalDebt      | uint256 | 当前已购买数量                                      |
 | _maxDebt        | uint256 | 购买上限                                         |
 
-### getBondInfoList (0x204cb0fa)
+### getBondInfoList (0xb234c8b4)
 
 ```solidity
 function getBondInfoList(
+    uint256 _uid,
     address _user
 ) public view returns (BondDepository.RetBondInfo[] memory _infoList)
 ```
@@ -554,6 +566,7 @@ Parameters:
 
 | Name  | Type    | Description |
 | :---- | :------ | :---------- |
+| _uid  | uint256 | 项目id        |
 | _user | address | 用户地址        |
 
 
@@ -563,12 +576,13 @@ Return values:
 | :-------- | :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | _infoList | struct BondDepository.RetBondInfo[] | bond列表，元素是RetBondInfo。 struct RetBondInfo { uint256 id; // id of bond depositor address owner; // address of bond depositor uint256 payout; // pending uint256 vesting; // 还剩多少块 uint256 claimable;  // 可领取数量 uint256 pricePaid; // In USD, for front end viewing } |
 
-### getInviteBondInfo (0x0d7e9148)
+### getInviteBondInfo (0x10a50cf9)
 
 ```solidity
 function getInviteBondInfo(
+    uint256 _uid,
     address _user
-) public view returns (BondDepository.RetBondInfo memory _inviteBondInfo)
+) public view returns (BondDepository.RetBondInfo[] memory _inviteBondInfos)
 ```
 
 获取用户的invite bond数据
@@ -578,14 +592,15 @@ Parameters:
 
 | Name  | Type    | Description |
 | :---- | :------ | :---------- |
+| _uid  | uint256 | 项目id        |
 | _user | address | 用户地址        |
 
 
 Return values:
 
-| Name            | Type                              | Description                                                                                                                                                                                                                                                         |
-| :-------------- | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| _inviteBondInfo | struct BondDepository.RetBondInfo | bond数据，类型是RetBondInfo。 struct RetBondInfo { uint256 id; // id of bond depositor address owner; // address of bond depositor uint256 payout; // pending uint256 vesting; // 还剩多少块 uint256 claimable;  // 可领取数量 uint256 pricePaid; // In USD, for front end viewing } |
+| Name             | Type                                | Description                                                                                                                                                                                                                                                           |
+| :--------------- | :---------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _inviteBondInfos | struct BondDepository.RetBondInfo[] | bond数据，类型是RetBondInfo[]。 struct RetBondInfo { uint256 id; // id of bond depositor address owner; // address of bond depositor uint256 payout; // pending uint256 vesting; // 还剩多少块 uint256 claimable;  // 可领取数量 uint256 pricePaid; // In USD, for front end viewing } |
 
 ### estimateGetCSM (0x23fdd7a9)
 
@@ -609,10 +624,13 @@ Return values:
 | :----- | :------ | :---------- |
 | payout | uint256 | CSM的数量      |
 
-### getMembers (0x78544629)
+### getMembers (0xcc1a380f)
 
 ```solidity
-function getMembers(address _depositor) public view returns (address)
+function getMembers(
+    uint256 _uid,
+    address _depositor
+) public view returns (address)
 ```
 
 
@@ -798,10 +816,11 @@ Return values:
 | :----- | :------ | :---------- |
 | decay_ | uint256 | uint        |
 
-### percentVestedFor (0x713208ed)
+### percentVestedFor (0x763f27c7)
 
 ```solidity
 function percentVestedFor(
+    uint256 _uid,
     address _depositor,
     uint256 _id,
     bool _invite
@@ -815,6 +834,7 @@ Parameters:
 
 | Name       | Type    | Description          |
 | :--------- | :------ | :------------------- |
+| _uid       | uint256 | 项目id                 |
 | _depositor | address | address              |
 | _id        | uint256 | uint256 bond id      |
 | _invite    | bool    | bool is invite bond  |
@@ -826,10 +846,11 @@ Return values:
 | :------------- | :------ | :---------- |
 | percentVested_ | uint256 | uint        |
 
-### pendingPayoutFor (0xeffffce1)
+### pendingPayoutFor (0xd38a6cb3)
 
 ```solidity
 function pendingPayoutFor(
+    uint256 _uid,
     address _depositor,
     uint256 _id,
     bool _invite
@@ -854,10 +875,11 @@ Return values:
 | :------------- | :------ | :---------- |
 | pendingPayout_ | uint256 | uint        |
 
-### getStakedAmount (0x4da6a556)
+### getStakedAmount (0x3a71ede8)
 
 ```solidity
 function getStakedAmount(
+    uint256 _uid,
     address _address
 ) public view returns (uint256 _stakedAmount)
 ```
@@ -869,6 +891,7 @@ Parameters:
 
 | Name     | Type    | Description |
 | :------- | :------ | :---------- |
+| _uid     | uint256 | 项目id        |
 | _address | address | address     |
 
 

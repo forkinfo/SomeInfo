@@ -5,7 +5,7 @@
 #### License: GPL-3.0
 
 ```solidity
-contract FeeReceiver is Initializable
+contract FeeReceiver is AccessControlUpgradeable
 ```
 
 
@@ -15,6 +15,15 @@ contract FeeReceiver is Initializable
 
 ```solidity
 uint256 sellFee
+```
+
+
+## Modifiers info
+
+### onlyManager
+
+```solidity
+modifier onlyManager()
 ```
 
 
@@ -41,13 +50,16 @@ function transferTokenOut(
     address token_,
     address addr_,
     uint256 amount
-) external
+) external onlyManager
 ```
 
 
 ### transferTokenOut (0x002e0ae7)
 
 ```solidity
-function transferTokenOut(address payable account_, uint256 amount_) external
+function transferTokenOut(
+    address payable account_,
+    uint256 amount_
+) external onlyManager
 ```
 

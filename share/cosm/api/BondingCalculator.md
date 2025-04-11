@@ -64,3 +64,4 @@ function valuation(
 function markdown(address _pair) external view returns (uint256)
 ```
 
+根据LP的RFV，计算一个CSM的USD价值。

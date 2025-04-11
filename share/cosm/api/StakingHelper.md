@@ -41,9 +41,9 @@ function initialize() public initializer
 ```
 
 
-### stake (0xa694fc3a)
+### stake (0x7b0472f0)
 
 ```solidity
-function stake(uint256 _amount) external
+function stake(uint256 _uid, uint256 _amount) external
 ```
 

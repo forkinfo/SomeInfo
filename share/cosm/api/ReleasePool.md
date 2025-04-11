@@ -67,63 +67,63 @@ struct RetDestruction {
 ### EventBurnToken
 
 ```solidity
-event EventBurnToken(address indexed user, uint256 amount)
+event EventBurnToken(uint256 indexed uid, address indexed user, uint256 amount, uint256 totalAmount)
 ```
 
 
 ### EventStartStakingRelease
 
 ```solidity
-event EventStartStakingRelease(address indexed user, uint256 amount, address burnToken, uint64 releaseLevel, uint256 index, ReleasePool.Record record)
+event EventStartStakingRelease(uint256 indexed uid, address indexed user, uint256 amount, address burnToken, uint64 releaseLevel, uint256 index, ReleasePool.Record record)
 ```
 
 
 ### EventStartContributionRelease
 
 ```solidity
-event EventStartContributionRelease(address indexed user, uint256 amount, address burnToken, uint64 releaseLevel, uint256 index, ReleasePool.Record record)
+event EventStartContributionRelease(uint256 indexed uid, address indexed user, uint256 amount, address burnToken, uint64 releaseLevel, uint256 index, ReleasePool.Record record)
 ```
 
 
 ### EventLevelupRewardRelease
 
 ```solidity
-event EventLevelupRewardRelease(address indexed user, uint64 now, uint64 releaseLevel, uint256 destructionAmt, ReleasePool.Record record)
+event EventLevelupRewardRelease(uint256 indexed uid, address indexed user, uint64 now, uint64 releaseLevel, uint256 destructionAmt, ReleasePool.Record record)
 ```
 
 
 ### EventClaimStakingInterest
 
 ```solidity
-event EventClaimStakingInterest(address indexed user, uint256 claimableAmt_, ReleasePool.Record record)
+event EventClaimStakingInterest(uint256 indexed uid, address indexed user, uint256 claimableAmt_, ReleasePool.Record record)
 ```
 
 
 ### EventClaimStakingInterestAll
 
 ```solidity
-event EventClaimStakingInterestAll(address indexed user, uint256 claimableAmt, ReleasePool.Record[] record)
+event EventClaimStakingInterestAll(uint256 indexed uid, address indexed user, uint256 claimableAmt, ReleasePool.Record[] record)
 ```
 
 
 ### EventClaimContributionInterest
 
 ```solidity
-event EventClaimContributionInterest(address indexed user, uint256 claimableAmt_, ReleasePool.Record record)
+event EventClaimContributionInterest(uint256 indexed uid, address indexed user, uint256 claimableAmt_, ReleasePool.Record record)
 ```
 
 
 ### EventClaimContributionInterestAll
 
 ```solidity
-event EventClaimContributionInterestAll(address indexed user, uint256 claimableAmt, ReleasePool.Record[] record)
+event EventClaimContributionInterestAll(uint256 indexed uid, address indexed user, uint256 claimableAmt, ReleasePool.Record[] record)
 ```
 
 
 ### EventReleaseDestruction
 
 ```solidity
-event EventReleaseDestruction(address indexed user, uint256 rewardType, address burnToken, uint256 destructionAmt)
+event EventReleaseDestruction(uint256 indexed uid, address indexed user, uint256 rewardType, address burnToken, uint256 destructionAmt)
 ```
 
 
@@ -215,17 +215,17 @@ struct ReleasePool.DestructionConfig[] interestDestructionConfig
 ```
 
 
-### userClaimedReward (0xac682488)
+### userClaimedReward (0x8e1b600a)
 
 ```solidity
-mapping(address => uint256) userClaimedReward
+mapping(uint256 => mapping(address => uint256)) userClaimedReward
 ```
 
 
-### userBurned (0x562904e9)
+### userBurned (0xf5de9560)
 
 ```solidity
-mapping(address => uint256) userBurned
+mapping(uint256 => mapping(address => uint256)) userBurned
 ```
 
 用户销毁的CSM数量
@@ -240,6 +240,13 @@ uint256 recordLength
 
 ```solidity
 mapping(uint256 => struct ReleasePool.Record) recordList
+```
+
+
+### totalBurned (0x6ef82ecc)
+
+```solidity
+mapping(uint256 => uint256) totalBurned
 ```
 
 
@@ -287,10 +294,11 @@ function initialize(address _destructionReceiver) public initializer
 ```
 
 
-### getInfo (0xffdd5cf1)
+### getInfo (0x00d53978)
 
 ```solidity
 function getInfo(
+    uint256 uid_,
     address user_
 ) external view returns (uint256 stakeBase_, uint256 contributorFactor_)
 ```
@@ -302,6 +310,7 @@ Parameters:
 
 | Name  | Type    | Description |
 | :---- | :------ | :---------- |
+| uid_  | uint256 | 项目id        |
 | user_ | address | 用户地址        |
 
 
@@ -312,10 +321,10 @@ Return values:
 | stakeBase_         | uint256 | 质押基数        |
 | contributorFactor_ | uint256 | 能量因子        |
 
-### burnToken (0x7b47ec1a)
+### burnToken (0x8225b247)
 
 ```solidity
-function burnToken(uint256 amount_) external
+function burnToken(uint256 uid_, uint256 amount_) external
 ```
 
 用户销毁CSM，降低ContributionFactor
@@ -325,12 +334,14 @@ Parameters:
 
 | Name    | Type    | Description |
 | :------ | :------ | :---------- |
+| uid_    | uint256 | 项目id        |
 | amount_ | uint256 | 销毁数量        |
 
-### startStakingRelease (0xeffe1f8e)
+### startStakingRelease (0x752dddb8)
 
 ```solidity
 function startStakingRelease(
+    uint256 uid_,
     address user_,
     uint256 amount_,
     address burnToken_,
@@ -340,10 +351,11 @@ function startStakingRelease(
 ```
 
 Claim interest with release duration.
-### startContributionRelease (0x2e91474b)
+### startContributionRelease (0xbb369d67)
 
 ```solidity
 function startContributionRelease(
+    uint256 uid_,
     address user_,
     uint256 amount_,
     address burnToken_,
@@ -353,10 +365,11 @@ function startContributionRelease(
 ```
 
 Claim interest with release duration.
-### levelup (0x339559f2)
+### levelup (0x189ef155)
 
 ```solidity
 function levelup(
+    uint256 uid_,
     uint256 rewardType_,
     uint256 index_,
     address burnToken_,
@@ -372,15 +385,17 @@ Parameters:
 
 | Name          | Type    | Description       |
 | :------------ | :------ | :---------------- |
+| uid_          | uint256 | 项目id              |
 | rewardType_   | uint256 | 收益类型              |
 | index_        | uint256 | 收益序号              |
 | burnAmt_      | uint256 | 释放收益所需要销毁的数量      |
 | releaseLevel_ | uint64  | 释放等级。1~5对应150天到7天 |
 
-### claimStaking (0x380b5498)
+### claimStaking (0x543d76cc)
 
 ```solidity
 function claimStaking(
+    uint256 uid_,
     address user_,
     uint256 index_,
     address burnToken_
@@ -394,14 +409,15 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| uid_       | uint256 | 项目id        |
 | user_      | address | 用户地址        |
 | index_     | uint256 | 收益序号        |
 | burnToken_ | address | 销毁的token地址  |
 
-### claimStakingAll (0xdc0b0229)
+### claimStakingAll (0x8a88bc88)
 
 ```solidity
-function claimStakingAll(address burnToken_) external
+function claimStakingAll(uint256 uid_, address burnToken_) external
 ```
 
 领取用户staking的，指定burn token的所有释放结束的收益
@@ -411,12 +427,14 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| uid_       | uint256 | 项目id        |
 | burnToken_ | address | 销毁的token地址  |
 
-### claimContribution (0x41b214f3)
+### claimContribution (0x91075d37)
 
 ```solidity
 function claimContribution(
+    uint256 uid_,
     address user_,
     uint256 index_,
     address burnToken_
@@ -430,14 +448,15 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| uid_       | uint256 | 项目id        |
 | user_      | address | 用户地址        |
 | index_     | uint256 | 收益序号        |
 | burnToken_ | address | 销毁的token地址  |
 
-### claimContributionAll (0xb5042dea)
+### claimContributionAll (0xfc88200f)
 
 ```solidity
-function claimContributionAll(address burnToken_) external
+function claimContributionAll(uint256 uid_, address burnToken_) external
 ```
 
 领取用户staking的，指定burn token的所有释放结束的收益
@@ -447,6 +466,7 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| uid_       | uint256 | 项目id        |
 | burnToken_ | address | 销毁的token地址  |
 
 ### getDestructionAmount (0x417bf725)
@@ -475,10 +495,11 @@ Return values:
 | :---------- | :---------------------------------- | :------------------------ |
 | amountList_ | struct ReleasePool.RetDestruction[] | 销毁信息的数组，元素为RetDestruction |
 
-### getUserStakingRecords (0x6e0fac88)
+### getUserStakingRecords (0xaece3585)
 
 ```solidity
 function getUserStakingRecords(
+    uint256 uid_,
     address user_,
     address burnToken_
 ) external view returns (ReleasePool.Record[] memory rList_)
@@ -491,6 +512,7 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| uid_       | uint256 | 项目id        |
 | user_      | address | 用户地址        |
 | burnToken_ | address | 指定销毁币种      |
 
@@ -501,10 +523,11 @@ Return values:
 | :----- | :-------------------------- | :--------------- |
 | rList_ | struct ReleasePool.Record[] | 收益列表信息，元素为Record |
 
-### getUserContributionRecords (0xc4b04cf6)
+### getUserContributionRecords (0x821c6007)
 
 ```solidity
 function getUserContributionRecords(
+    uint256 uid_,
     address user_,
     address burnToken_
 ) external view returns (ReleasePool.Record[] memory rList_)
@@ -517,6 +540,7 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| uid_       | uint256 | 项目id        |
 | user_      | address | 用户地址        |
 | burnToken_ | address | 指定销毁币种      |
 

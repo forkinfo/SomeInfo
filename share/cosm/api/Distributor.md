@@ -48,17 +48,17 @@ address immutable treasury
 ```
 
 
-### epochLength (0x57d775f8)
+### epochTimeLength (0x4a25447a)
 
 ```solidity
-uint256 immutable epochLength
+uint256 immutable epochTimeLength
 ```
 
 
-### nextEpochBlock (0x00640c2e)
+### nextEpochBlockTime (0xabaffe9b)
 
 ```solidity
-uint256 nextEpochBlock
+uint256 nextEpochBlockTime
 ```
 
 
@@ -81,14 +81,21 @@ struct Distributor.Info[] info
 ### constructor
 
 ```solidity
-constructor(address _treasury, address _scsm, uint256 _epochLength)
+constructor(address _treasury, address _scsm, uint256 _epochTimeLength)
 ```
 
 
 ### initialize (0xfe4b84df)
 
 ```solidity
-function initialize(uint256 _nextEpochBlock) public initializer
+function initialize(uint256 _nextEpochBlockTime) public initializer
+```
+
+
+### getRecipientRate (0x23aacbaa)
+
+```solidity
+function getRecipientRate(address recipient) external view returns (uint256)
 ```
 
 

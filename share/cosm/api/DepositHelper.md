@@ -14,7 +14,7 @@ contract DepositHelper is Initializable
 ### EventDepositHelper
 
 ```solidity
-event EventDepositHelper(address indexed sender, uint256 amount, uint256 amountUSDTLast, uint256 amountUSDTSwapIn, uint256 amountActualA, uint256 amountActualB, uint256 liquidity)
+event EventDepositHelper(uint256 indexed uid, address indexed sender, uint256 amount, uint256 amountUSDTLast, uint256 amountUSDTSwapIn, uint256 amountActualA, uint256 amountActualB, uint256 liquidity)
 ```
 
 
@@ -77,10 +77,11 @@ function initialize() public initializer
 ```
 
 
-### depositHelper (0x23bdb320)
+### depositHelper (0x891cc685)
 
 ```solidity
 function depositHelper(
+    uint256 uid_,
     uint256 amount_,
     uint256 maxPrice_,
     address token_
@@ -88,12 +89,24 @@ function depositHelper(
 ```
 
 
-### getUSDTSwapAllocation (0x6362e5bf)
+### estimateGetCSM (0x23fdd7a9)
 
 ```solidity
-function getUSDTSwapAllocation(
-    uint256 amountUSDT_,
-    address token_
-) public view returns (uint256, uint256)
+function estimateGetCSM(uint256 _amount) public view returns (uint256 payout)
 ```
 
+获取Bond的预估购买到CSM数量
+
+
+Parameters:
+
+| Name    | Type    | Description |
+| :------ | :------ | :---------- |
+| _amount | uint256 | token的数量    |
+
+
+Return values:
+
+| Name   | Type    | Description |
+| :----- | :------ | :---------- |
+| payout | uint256 | CSM的数量      |

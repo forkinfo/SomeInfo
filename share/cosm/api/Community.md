@@ -14,7 +14,7 @@ contract Community is OwnableUpgradeable
 ### EventAddReferrer
 
 ```solidity
-event EventAddReferrer(address user, address referrer)
+event EventAddReferrer(uint256 indexed uid, address indexed user, address referrer)
 ```
 
 
@@ -29,10 +29,10 @@ address constant ROOT = address(0x01)
 
 ## State variables info
 
-### referrer (0x2cf003c2)
+### referrer (0x230dc74c)
 
 ```solidity
-mapping(address => address) referrer
+mapping(uint256 => mapping(address => address)) referrer
 ```
 
 
@@ -45,16 +45,19 @@ function initialize() public initializer
 ```
 
 
-### referrerOf (0xd21cacdf)
+### referrerOf (0xabdc887b)
 
 ```solidity
-function referrerOf(address account_) external view returns (address)
+function referrerOf(
+    uint256 uid_,
+    address account_
+) external view returns (address)
 ```
 
 
-### addReferrer (0xfefa9bb1)
+### addReferrer (0x63bc0557)
 
 ```solidity
-function addReferrer(address referrer_) external
+function addReferrer(uint256 uid_, address referrer_) external
 ```
 

@@ -30,7 +30,7 @@ enum CONTRACTS {
 struct Epoch {
 	uint256 length;
 	uint256 number;
-	uint256 endBlock;
+	uint256 endBlockTime;
 	uint256 distribute;
 }
 ```
@@ -53,35 +53,35 @@ struct Claim {
 ### Staked
 
 ```solidity
-event Staked(address indexed staker, uint256 amount)
+event Staked(uint256 indexed uid, address indexed staker, uint256 amount)
 ```
 
 
 ### Unstaked
 
 ```solidity
-event Unstaked(address indexed staker, uint256 unstakeAmount)
+event Unstaked(uint256 indexed uid, address indexed staker, uint256 unstakeAmount)
 ```
 
 
 ### Principal
 
 ```solidity
-event Principal(address indexed staker, uint256 principal)
+event Principal(uint256 indexed uid, address indexed staker, uint256 principal)
 ```
 
 
 ### Forfeited
 
 ```solidity
-event Forfeited(address indexed staker, uint256 amount)
+event Forfeited(uint256 indexed uid, address indexed staker, uint256 amount)
 ```
 
 
 ### EventStartClaimInterest
 
 ```solidity
-event EventStartClaimInterest(address indexed staker, uint256 amount)
+event EventStartClaimInterest(uint256 indexed uid, address indexed staker, uint256 amount)
 ```
 
 
@@ -183,17 +183,17 @@ uint256 warmupPeriod
 ```
 
 
-### warmupInfo (0x6746f4c2)
+### warmupInfo (0x11c3bf85)
 
 ```solidity
-mapping(address => struct Staking.Claim) warmupInfo
+mapping(uint256 => mapping(address => struct Staking.Claim)) warmupInfo
 ```
 
 
-### principals (0x76fbc359)
+### principals (0x767f06f1)
 
 ```solidity
-mapping(address => uint256) principals
+mapping(uint256 => mapping(address => uint256)) principals
 ```
 
 
@@ -216,17 +216,18 @@ constructor(
 
 ```solidity
 function initialize(
-    uint256 _epochLength,
+    uint256 _epochTimeLength,
     uint256 _firstEpochNumber,
-    uint256 _firstEpochBlock
+    uint256 _firstEpochBlockTime
 ) public initializer
 ```
 
 
-### getStakeInfo (0xc3453153)
+### getStakeInfo (0x5cb7d00b)
 
 ```solidity
 function getStakeInfo(
+    uint256 _uid,
     address _user
 )
     external
@@ -241,6 +242,7 @@ Parameters:
 
 | Name  | Type    | Description |
 | :---- | :------ | :---------- |
+| _uid  | uint256 | 项目id        |
 | _user | address | 用户地址        |
 
 
@@ -252,24 +254,34 @@ Return values:
 | interest     | uint256 | 收益             |
 | sCSMInWarmup | uint256 | warmup中的sCSM数量 |
 
-### getStakeAmount (0x0c2eb403)
+### getStakeAmount (0x238aa19d)
 
 ```solidity
-function getStakeAmount(address _user) public view returns (uint256)
+function getStakeAmount(
+    uint256 _uid,
+    address _user
+) public view returns (uint256)
 ```
 
 获取质押数量
-### getStakeTokenWorth (0x76e50cf9)
+### getStakeTokenWorth (0x9248f8d3)
 
 ```solidity
-function getStakeTokenWorth(address _user) public view returns (uint256)
+function getStakeTokenWorth(
+    uint256 _uid,
+    address _user
+) public view returns (uint256)
 ```
 
 获取质押CSM的USD价值
-### stake (0x7acb7757)
+### stake (0x7628a37d)
 
 ```solidity
-function stake(uint256 _amount, address _recipient) external returns (bool)
+function stake(
+    uint256 _uid,
+    uint256 _amount,
+    address _recipient
+) external returns (bool)
 ```
 
 质押CSM，进入Warmup
@@ -279,13 +291,14 @@ Parameters:
 
 | Name       | Type    | Description       |
 | :--------- | :------ | :---------------- |
+| _uid       | uint256 | 项目id              |
 | _amount    | uint256 | 质押数量              |
 | _recipient | address | CSM的owner @return |
 
-### claim (0x1e83409a)
+### claim (0xddd5e1b2)
 
 ```solidity
-function claim(address _recipient) external
+function claim(uint256 _uid, address _recipient) external
 ```
 
 从Warmup中领取sCSM
@@ -295,19 +308,20 @@ Parameters:
 
 | Name       | Type    | Description |
 | :--------- | :------ | :---------- |
+| _uid       | uint256 | 项目id        |
 | _recipient | address | 接受sCSM的地址   |
 
-### forfeit (0xf3d86e4a)
+### forfeit (0x3ed546ab)
 
 ```solidity
-function forfeit() external
+function forfeit(uint256 _uid) external
 ```
 
 强制收回CSM
-### unstake (0xcf459636)
+### unstake (0x5b64f391)
 
 ```solidity
-function unstake(bool _trigger, uint256 _amount) external
+function unstake(uint256 _uid, bool _trigger, uint256 _amount) external
 ```
 
 unstake 本金
@@ -317,13 +331,15 @@ Parameters:
 
 | Name     | Type    | Description   |
 | :------- | :------ | :------------ |
+| _uid     | uint256 | 项目id          |
 | _trigger | bool    | 是否尝试触发rebase  |
 | _amount  | uint256 | unstake的数量    |
 
-### claimInterest (0x04c9e989)
+### claimInterest (0x3605134e)
 
 ```solidity
 function claimInterest(
+    uint256 _uid,
     bool _trigger,
     uint256 _amount,
     uint256 _burnAmt,
@@ -338,15 +354,16 @@ Parameters:
 
 | Name          | Type    | Description       |
 | :------------ | :------ | :---------------- |
+| _uid          | uint256 | 项目id              |
 | _trigger      | bool    | 是否尝试触发rebase      |
 | _amount       | uint256 | 释放的收益数量           |
 | _burnAmt      | uint256 | 释放收益所需要销毁的数量      |
 | _releaseLevel | uint256 | 释放等级。1~5对应150天到7天 |
 
-### toggleDepositLock (0x8f077b83)
+### toggleDepositLock (0xd8295c3f)
 
 ```solidity
-function toggleDepositLock() external
+function toggleDepositLock(uint256 _uid) external
 ```
 
 prevent new deposits to address (protection from malicious activity)
@@ -442,3 +459,10 @@ Parameters:
 | Name          | Type    | Description |
 | :------------ | :------ | :---------- |
 | _warmupPeriod | uint256 | uint        |
+
+### updateEpoch (0x15ca0dc0)
+
+```solidity
+function updateEpoch(uint256 _epochLength) external onlyOwner
+```
+

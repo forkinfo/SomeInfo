@@ -27,10 +27,11 @@ function initialize() public initializer
 ```
 
 
-### redeemAll (0x9c45c620)
+### redeemAll (0x502a7ee6)
 
 ```solidity
 function redeemAll(
+    uint256 _uid,
     address _recipient,
     uint256[] memory _ids,
     bool _stake,
