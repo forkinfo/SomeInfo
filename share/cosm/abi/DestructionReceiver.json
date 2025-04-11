@@ -205,19 +205,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "sellFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "bytes4",
@@ -239,24 +226,6 @@
   {
     "inputs": [
       {
-        "internalType": "address payable",
-        "name": "account_",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount_",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferTokenOut",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "token_",
         "type": "address"
@@ -273,19 +242,6 @@
       }
     ],
     "name": "transferTokenOut",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "triggerSwap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

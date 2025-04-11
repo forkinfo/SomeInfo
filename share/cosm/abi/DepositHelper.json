@@ -35,6 +35,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "sender",
         "type": "address"
@@ -161,6 +167,11 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "amount_",
         "type": "uint256"
       },
@@ -193,25 +204,6 @@
       {
         "internalType": "uint256",
         "name": "payout",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount_",
-        "type": "uint256"
-      }
-    ],
-    "name": "getLiquidityAddValue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
         "type": "uint256"
       }
     ],

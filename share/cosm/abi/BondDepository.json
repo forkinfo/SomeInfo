@@ -65,6 +65,12 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "deposit",
@@ -83,7 +89,7 @@
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "priceInUSD",
         "type": "uint256"
@@ -97,6 +103,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "account",
         "type": "address"
@@ -108,7 +120,7 @@
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "value",
         "type": "uint256"
@@ -123,6 +135,12 @@
       {
         "indexed": true,
         "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
         "name": "priceInUSD",
         "type": "uint256"
       },
@@ -133,7 +151,7 @@
         "type": "uint256"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "debtRatio",
         "type": "uint256"
@@ -145,6 +163,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
       {
         "indexed": true,
         "internalType": "address",
@@ -360,7 +384,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "lastBlock",
+        "name": "lastBlockTime",
         "type": "uint256"
       },
       {
@@ -374,6 +398,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "",
@@ -409,7 +438,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "lastBlock",
+        "name": "lastBlockTime",
         "type": "uint256"
       },
       {
@@ -488,6 +517,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "_amount",
@@ -570,6 +604,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_addr",
         "type": "address"
@@ -601,7 +640,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "lastBlock",
+            "name": "lastBlockTime",
             "type": "uint256"
           },
           {
@@ -621,6 +660,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_addr",
         "type": "address"
@@ -639,6 +683,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_user",
@@ -719,6 +768,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_user",
         "type": "address"
@@ -769,6 +823,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_depositor",
@@ -826,6 +885,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_address",
@@ -906,6 +970,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -935,7 +1004,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "lastBlock",
+        "name": "lastBlockTime",
         "type": "uint256"
       },
       {
@@ -1047,6 +1116,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_depositor",
         "type": "address"
@@ -1075,6 +1149,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_depositor",
@@ -1137,6 +1216,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_recipient",
         "type": "address"
@@ -1165,6 +1249,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_recipient",

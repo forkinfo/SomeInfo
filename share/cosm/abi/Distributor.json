@@ -13,7 +13,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_epochLength",
+        "name": "_epochTimeLength",
         "type": "uint256"
       }
     ],
@@ -114,7 +114,26 @@
   },
   {
     "inputs": [],
-    "name": "epochLength",
+    "name": "epochTimeLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "getRecipientRate",
     "outputs": [
       {
         "internalType": "uint256",
@@ -153,7 +172,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_nextEpochBlock",
+        "name": "_nextEpochBlockTime",
         "type": "uint256"
       }
     ],
@@ -164,7 +183,7 @@
   },
   {
     "inputs": [],
-    "name": "nextEpochBlock",
+    "name": "nextEpochBlockTime",
     "outputs": [
       {
         "internalType": "uint256",

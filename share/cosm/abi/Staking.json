@@ -72,6 +72,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "staker",
         "type": "address"
@@ -89,6 +95,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
       {
         "indexed": true,
         "internalType": "address",
@@ -142,6 +154,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "staker",
         "type": "address"
@@ -161,6 +179,12 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "staker",
         "type": "address"
@@ -178,6 +202,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
       {
         "indexed": true,
         "internalType": "address",
@@ -249,6 +279,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_recipient",
         "type": "address"
@@ -261,6 +296,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "bool",
         "name": "_trigger",
@@ -329,7 +369,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "endBlock",
+        "name": "endBlockTime",
         "type": "uint256"
       },
       {
@@ -342,7 +382,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
     "name": "forfeit",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -350,6 +396,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_user",
@@ -369,6 +420,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_user",
@@ -398,6 +454,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "_user",
@@ -445,7 +506,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_epochLength",
+        "name": "_epochTimeLength",
         "type": "uint256"
       },
       {
@@ -455,7 +516,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_firstEpochBlock",
+        "name": "_firstEpochBlockTime",
         "type": "uint256"
       }
     ],
@@ -492,6 +553,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "",
@@ -584,6 +650,11 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
       },
@@ -605,7 +676,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
     "name": "toggleDepositLock",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -640,6 +717,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
         "internalType": "bool",
         "name": "_trigger",
         "type": "bool"
@@ -651,6 +733,19 @@
       }
     ],
     "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_epochLength",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateEpoch",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -670,6 +765,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "",

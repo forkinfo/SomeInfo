@@ -20,6 +20,12 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "account",
         "type": "address"
@@ -57,6 +63,12 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "recipient",
         "type": "address"
@@ -80,6 +92,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -276,6 +294,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -293,7 +316,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "bondInviteTotalReward",
     "outputs": [
       {
@@ -307,6 +336,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "totalAmount_",
@@ -339,7 +373,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      }
+    ],
     "name": "cumulativeReward",
     "outputs": [
       {
@@ -420,7 +460,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "lastRewardOffset",
     "outputs": [
       {
@@ -433,7 +479,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "maxEpoch",
     "outputs": [
       {
@@ -447,6 +499,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "",
@@ -465,7 +522,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "merkleRoot",
     "outputs": [
       {
@@ -478,7 +541,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "merkleTotalClaimed",
     "outputs": [
       {
@@ -491,7 +560,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "prevEpochRewardOffset",
     "outputs": [
       {
@@ -504,7 +579,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      }
+    ],
     "name": "rebaseMaxContributionReward",
     "outputs": [
       {
@@ -517,7 +598,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      }
+    ],
     "name": "rebaseMaxContributionRewardFromPrev",
     "outputs": [
       {
@@ -531,6 +618,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
         "name": "recipient_",
@@ -604,6 +696,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
       {
         "internalType": "bytes32",
         "name": "merkleRoot_",
