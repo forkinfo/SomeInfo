@@ -55,9 +55,29 @@ function referrerOf(
 ```
 
 
+### getReferrers (0x607f2666)
+
+```solidity
+function getReferrers(
+    uint256 uid_,
+    address[] calldata accountList_
+) external view returns (address[] memory referrerList_)
+```
+
+
 ### addReferrer (0x63bc0557)
 
 ```solidity
 function addReferrer(uint256 uid_, address referrer_) external
+```
+
+
+### updateReferrer (0x7b12319f)
+
+```solidity
+function updateReferrer(
+    uint256 uid_,
+    address[2][] calldata referers_
+) external onlyOwner
 ```
 

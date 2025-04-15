@@ -274,6 +274,16 @@ function getStakeTokenWorth(
 ```
 
 获取质押CSM的USD价值
+### getStakedAmountList (0xc2e5ed92)
+
+```solidity
+function getStakedAmountList(
+    uint256 uid_,
+    address[] calldata accountList_
+) external view returns (uint256[] memory amountList_)
+```
+
+
 ### stake (0x7628a37d)
 
 ```solidity
