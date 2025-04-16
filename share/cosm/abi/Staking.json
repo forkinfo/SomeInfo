@@ -447,6 +447,11 @@
         "internalType": "uint256",
         "name": "sCSMInWarmup",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "claimable",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -471,6 +476,30 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accountList_",
+        "type": "address[]"
+      }
+    ],
+    "name": "getStakedAmountList",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amountList_",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
