@@ -95,12 +95,6 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "uid",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
         "name": "epochIndex",
         "type": "uint256"
       },
@@ -316,13 +310,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "bondInviteTotalReward",
     "outputs": [
       {
@@ -373,13 +361,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "uid_",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "cumulativeReward",
     "outputs": [
       {
@@ -460,13 +442,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "lastRewardOffset",
     "outputs": [
       {
@@ -479,13 +455,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "maxEpoch",
     "outputs": [
       {
@@ -522,13 +492,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "merkleRoot",
     "outputs": [
       {
@@ -541,13 +505,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "merkleTotalClaimed",
     "outputs": [
       {
@@ -560,13 +518,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "prevEpochRewardOffset",
     "outputs": [
       {
@@ -579,13 +531,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "uid_",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "rebaseMaxContributionReward",
     "outputs": [
       {
@@ -598,13 +544,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "uid_",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "rebaseMaxContributionRewardFromPrev",
     "outputs": [
       {
@@ -696,11 +636,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "uid_",
-        "type": "uint256"
-      },
       {
         "internalType": "bytes32",
         "name": "merkleRoot_",
