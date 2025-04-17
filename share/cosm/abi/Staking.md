@@ -232,7 +232,12 @@ function getStakeInfo(
 )
     external
     view
-    returns (uint256 principalAmt, uint256 interest, uint256 sCSMInWarmup)
+    returns (
+        uint256 principalAmt,
+        uint256 interest,
+        uint256 sCSMInWarmup,
+        bool claimable
+    )
 ```
 
 获取质押信息
