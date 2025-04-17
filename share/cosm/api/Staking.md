@@ -16,7 +16,6 @@ contract Staking is OwnableUpgradeable
 ```solidity
 enum CONTRACTS {
 	 DISTRIBUTOR,
-	 WARMUP,
 	 LOCKER
 }
 ```
@@ -68,13 +67,6 @@ event Unstaked(uint256 indexed uid, address indexed staker, uint256 unstakeAmoun
 
 ```solidity
 event Principal(uint256 indexed uid, address indexed staker, uint256 principal)
-```
-
-
-### Forfeited
-
-```solidity
-event Forfeited(uint256 indexed uid, address indexed staker, uint256 amount)
 ```
 
 
@@ -223,6 +215,21 @@ function initialize(
 ```
 
 
+### getNextRebaseTime (0xec2f448f)
+
+```solidity
+function getNextRebaseTime() external view returns (uint256)
+```
+
+获取下次rebase时间
+
+
+Return values:
+
+| Name | Type    | Description |
+| :--- | :------ | :---------- |
+| [0]  | uint256 | 下次rebase时间  |
+
 ### getStakeInfo (0x5cb7d00b)
 
 ```solidity
@@ -259,13 +266,10 @@ Return values:
 | interest     | uint256 | 收益             |
 | sCSMInWarmup | uint256 | warmup中的sCSM数量 |
 
-### getStakeAmount (0x238aa19d)
+### getStakeAmount (0x0c2eb403)
 
 ```solidity
-function getStakeAmount(
-    uint256 _uid,
-    address _user
-) public view returns (uint256)
+function getStakeAmount(address _user) public view returns (uint256)
 ```
 
 获取质押数量
@@ -278,13 +282,13 @@ function getStakeTokenWorth(
 ) public view returns (uint256)
 ```
 
-获取质押CSM的USD价值
+获取已质押CSM的USD价值
 ### getStakedAmountList (0xc2e5ed92)
 
 ```solidity
 function getStakedAmountList(
-    uint256 uid_,
-    address[] calldata accountList_
+    uint256 _uid,
+    address[] calldata _accountList
 ) external view returns (uint256[] memory amountList_)
 ```
 
@@ -299,7 +303,7 @@ function stake(
 ) external returns (bool)
 ```
 
-质押CSM，进入Warmup
+质押CSM
 
 
 Parameters:
@@ -326,13 +330,6 @@ Parameters:
 | _uid       | uint256 | 项目id        |
 | _recipient | address | 接受sCSM的地址   |
 
-### forfeit (0x3ed546ab)
-
-```solidity
-function forfeit(uint256 _uid) external
-```
-
-强制收回CSM
 ### unstake (0x5b64f391)
 
 ```solidity
@@ -375,13 +372,6 @@ Parameters:
 | _burnAmt      | uint256 | 释放收益所需要销毁的数量      |
 | _releaseLevel | uint256 | 释放等级。1~5对应150天到7天 |
 
-### toggleDepositLock (0xd8295c3f)
-
-```solidity
-function toggleDepositLock(uint256 _uid) external
-```
-
-prevent new deposits to address (protection from malicious activity)
 ### index (0x2986c0e5)
 
 ```solidity
@@ -460,21 +450,6 @@ function setContract(
 
 sets the contract address for LP staking
         @param _contract address
-### setWarmup (0xc9f464ff)
-
-```solidity
-function setWarmup(uint256 _warmupPeriod) external onlyOwner
-```
-
-set warmup period for new stakers
-
-
-Parameters:
-
-| Name          | Type    | Description |
-| :------------ | :------ | :---------- |
-| _warmupPeriod | uint256 | uint        |
-
 ### updateEpoch (0x15ca0dc0)
 
 ```solidity
