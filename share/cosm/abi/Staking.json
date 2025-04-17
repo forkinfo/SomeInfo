@@ -1,0 +1,847 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_CSM",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_sCSM",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_WBNB",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_releasePool",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_pairCSMUSDT",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curEpochNumber",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "profit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "nextProfit",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "stakingCSMBalance",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "sCSMCirculatingSupply",
+        "type": "uint256"
+      }
+    ],
+    "name": "EventRebase",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EventStartClaimInterest",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Forfeited",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "principal",
+        "type": "uint256"
+      }
+    ],
+    "name": "Principal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Staked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "unstakeAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Unstaked",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "CSM",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PAIR_CSM_USDT",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "RELEASE_POOL",
+    "outputs": [
+      {
+        "internalType": "contract IReleasePool",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "WBNB",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_trigger",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_burnAmt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_releaseLevel",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimInterest",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "contractBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "distributor",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "epoch",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "length",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "number",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endBlockTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "distribute",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
+    "name": "forfeit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getStakeAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getStakeInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "principalAmt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "interest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "sCSMInWarmup",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "claimable",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      }
+    ],
+    "name": "getStakeTokenWorth",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "accountList_",
+        "type": "address[]"
+      }
+    ],
+    "name": "getStakedAmountList",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "amountList_",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "giveLockBonus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "index",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_epochTimeLength",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_firstEpochNumber",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_firstEpochBlockTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "locker",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "principals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rebase",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "returnLockBonus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "sCSM",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum Staking.CONTRACTS",
+        "name": "_contract",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "setContract",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_warmupPeriod",
+        "type": "uint256"
+      }
+    ],
+    "name": "setWarmup",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "stake",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
+    "name": "toggleDepositLock",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalBonus",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_trigger",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_epochLength",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateEpoch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "warmupContract",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "warmupInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "deposit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "gons",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expiry",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "lock",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "warmupPeriod",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
