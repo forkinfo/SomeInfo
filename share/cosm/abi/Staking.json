@@ -96,31 +96,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "uid",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "staker",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "Forfeited",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": false,
         "internalType": "uint8",
         "name": "version",
@@ -382,25 +357,20 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "getNextRebaseTime",
+    "outputs": [
       {
         "internalType": "uint256",
-        "name": "_uid",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "forfeit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_uid",
-        "type": "uint256"
-      },
       {
         "internalType": "address",
         "name": "_user",
@@ -485,12 +455,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "uid_",
+        "name": "_uid",
         "type": "uint256"
       },
       {
         "internalType": "address[]",
-        "name": "accountList_",
+        "name": "_accountList",
         "type": "address[]"
       }
     ],
@@ -666,19 +636,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_warmupPeriod",
-        "type": "uint256"
-      }
-    ],
-    "name": "setWarmup",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "_uid",
         "type": "uint256"
       },
@@ -701,19 +658,6 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_uid",
-        "type": "uint256"
-      }
-    ],
-    "name": "toggleDepositLock",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
