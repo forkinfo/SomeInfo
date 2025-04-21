@@ -51,6 +51,18 @@
         "internalType": "uint256",
         "name": "totalAmount",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "burnAmt",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastAmt",
+        "type": "uint256"
       }
     ],
     "name": "EventBurnToken",
@@ -1228,6 +1240,16 @@
         "internalType": "struct ReleasePool.Record[]",
         "name": "rList_",
         "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalClaimabledReward_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardMax_",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1309,6 +1331,16 @@
         "internalType": "struct ReleasePool.Record[]",
         "name": "rList_",
         "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalClaimabledReward_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardMax_",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1745,7 +1777,31 @@
         "type": "address"
       }
     ],
-    "name": "userClaimedReward",
+    "name": "userClaimedContributionReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userClaimedStakingReward",
     "outputs": [
       {
         "internalType": "uint256",

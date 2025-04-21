@@ -10,6 +10,11 @@
         "internalType": "address",
         "name": "_releasePool",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_staking",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -286,6 +291,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "STAKING",
+    "outputs": [
+      {
+        "internalType": "contract IStaking",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -363,6 +381,63 @@
   {
     "inputs": [],
     "name": "cumulativeReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "account_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalAmount_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "merkleProof_",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "getClaim",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getEpochNumber",
     "outputs": [
       {
         "internalType": "uint256",
@@ -648,7 +723,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "epochIndex_",
+        "name": "epochNumber_",
         "type": "uint256"
       }
     ],
