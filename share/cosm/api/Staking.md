@@ -230,6 +230,21 @@ Return values:
 | :--- | :------ | :---------- |
 | [0]  | uint256 | 下次rebase时间  |
 
+### getEpochNumber (0x9a7b3be7)
+
+```solidity
+function getEpochNumber() external view returns (uint256)
+```
+
+获取当前epoch number
+
+
+Return values:
+
+| Name | Type    | Description  |
+| :--- | :------ | :----------- |
+| [0]  | uint256 | epoch number |
+
 ### getStakeInfo (0x5cb7d00b)
 
 ```solidity

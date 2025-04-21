@@ -67,7 +67,7 @@ struct RetDestruction {
 ### EventBurnToken
 
 ```solidity
-event EventBurnToken(uint256 indexed uid, address indexed user, uint256 amount, uint256 totalAmount)
+event EventBurnToken(uint256 indexed uid, address indexed user, uint256 amount, uint256 totalAmount, uint256 burnAmt, uint256 lastAmt)
 ```
 
 
@@ -215,10 +215,10 @@ struct ReleasePool.DestructionConfig[] interestDestructionConfig
 ```
 
 
-### userClaimedReward (0x8e1b600a)
+### userClaimedStakingReward (0x71909d3f)
 
 ```solidity
-mapping(uint256 => mapping(address => uint256)) userClaimedReward
+mapping(uint256 => mapping(address => uint256)) userClaimedStakingReward
 ```
 
 
@@ -243,10 +243,17 @@ mapping(uint256 => struct ReleasePool.Record) recordList
 ```
 
 
-### totalBurned (0x6ef82ecc)
+### totalBurned (0xd89135cd)
 
 ```solidity
-mapping(uint256 => uint256) totalBurned
+uint256 totalBurned
+```
+
+
+### userClaimedContributionReward (0x8eb6e04f)
+
+```solidity
+mapping(uint256 => mapping(address => uint256)) userClaimedContributionReward
 ```
 
 
@@ -502,7 +509,14 @@ function getUserStakingRecords(
     uint256 uid_,
     address user_,
     address burnToken_
-) external view returns (ReleasePool.Record[] memory rList_)
+)
+    external
+    view
+    returns (
+        ReleasePool.Record[] memory rList_,
+        uint256 totalClaimabledReward_,
+        uint256 rewardMax_
+    )
 ```
 
 获取用户的staking收益释放列表
@@ -519,9 +533,11 @@ Parameters:
 
 Return values:
 
-| Name   | Type                        | Description      |
-| :----- | :-------------------------- | :--------------- |
-| rList_ | struct ReleasePool.Record[] | 收益列表信息，元素为Record |
+| Name                   | Type                        | Description       |
+| :--------------------- | :-------------------------- | :---------------- |
+| rList_                 | struct ReleasePool.Record[] | 收益列表信息，元素为Record  |
+| totalClaimabledReward_ | uint256                     | 总待领取奖励数量          |
+| rewardMax_             | uint256                     | 可领取奖励上限           |
 
 ### getUserContributionRecords (0x821c6007)
 
@@ -530,7 +546,14 @@ function getUserContributionRecords(
     uint256 uid_,
     address user_,
     address burnToken_
-) external view returns (ReleasePool.Record[] memory rList_)
+)
+    external
+    view
+    returns (
+        ReleasePool.Record[] memory rList_,
+        uint256 totalClaimabledReward_,
+        uint256 rewardMax_
+    )
 ```
 
 获取用户的Contribution收益释放列表
@@ -547,9 +570,11 @@ Parameters:
 
 Return values:
 
-| Name   | Type                        | Description      |
-| :----- | :-------------------------- | :--------------- |
-| rList_ | struct ReleasePool.Record[] | 收益列表信息，元素为Record |
+| Name                   | Type                        | Description       |
+| :--------------------- | :-------------------------- | :---------------- |
+| rList_                 | struct ReleasePool.Record[] | 收益列表信息，元素为Record  |
+| totalClaimabledReward_ | uint256                     | 总待领取奖励数量          |
+| rewardMax_             | uint256                     | 可领取奖励上限           |
 
 ### setInterestDestructionConfig (0xc2a56914)
 

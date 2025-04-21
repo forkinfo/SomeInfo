@@ -27,7 +27,7 @@ struct RootParams {
 ### EventUpdateMerkleRoot
 
 ```solidity
-event EventUpdateMerkleRoot(uint256 uid, uint256 epochIndex, uint256 maxReward, bytes32 merkleRoot, uint256 newTotalReward, uint256 newRewardOffset, uint256 prevRewardOffset)
+event EventUpdateMerkleRoot(uint256 epochIndex, uint256 maxReward, bytes32 merkleRoot, uint256 newTotalReward, uint256 newRewardOffset, uint256 prevRewardOffset)
 ```
 
 事件-默克尔根的更新
@@ -105,6 +105,13 @@ contract IReleasePool immutable RELEASE_POOL
 ```
 
 
+### STAKING (0x97610f30)
+
+```solidity
+contract IStaking immutable STAKING
+```
+
+
 ### CSM (0x8de2b272)
 
 ```solidity
@@ -112,24 +119,24 @@ address immutable CSM
 ```
 
 
-### merkleTotalClaimed (0x82328939)
+### merkleTotalClaimed (0x16c1a018)
 
 ```solidity
-mapping(uint256 => uint256) merkleTotalClaimed
+uint256 merkleTotalClaimed
 ```
 
 
-### lastRewardOffset (0x7f968dd8)
+### lastRewardOffset (0x398df8b3)
 
 ```solidity
-mapping(uint256 => uint256) lastRewardOffset
+uint256 lastRewardOffset
 ```
 
 
-### bondInviteTotalReward (0x3ea3a5a4)
+### bondInviteTotalReward (0xfa190351)
 
 ```solidity
-mapping(uint256 => uint256) bondInviteTotalReward
+uint256 bondInviteTotalReward
 ```
 
 
@@ -140,10 +147,10 @@ mapping(uint256 => mapping(address => uint256)) bondInviteClaimableReward
 ```
 
 uid=>user=>未开始释放的债券推荐奖励
-### merkleRoot (0x3c70b357)
+### merkleRoot (0x2eb4a7ab)
 
 ```solidity
-mapping(uint256 => bytes32) merkleRoot
+bytes32 merkleRoot
 ```
 
 
@@ -154,17 +161,17 @@ mapping(uint256 => mapping(address => uint256)) merkleClaimedAmounts
 ```
 
 uid=>用户地址=>社群奖励中已领取奖励数量
-### maxEpoch (0x51a1e2ac)
+### maxEpoch (0xf26d929e)
 
 ```solidity
-mapping(uint256 => uint256) maxEpoch
+uint256 maxEpoch
 ```
 
 
-### prevEpochRewardOffset (0xfdbc8a8a)
+### prevEpochRewardOffset (0xb1ed6655)
 
 ```solidity
-mapping(uint256 => uint256) prevEpochRewardOffset
+uint256 prevEpochRewardOffset
 ```
 
 
@@ -189,7 +196,7 @@ modifier onlyBondDepository()
 ### constructor
 
 ```solidity
-constructor(address _CSM, address _releasePool)
+constructor(address _CSM, address _releasePool, address _staking)
 ```
 
 
@@ -200,31 +207,29 @@ function initialize() public initializer
 ```
 
 
-### cumulativeReward (0x68002a04)
+### getEpochNumber (0x9a7b3be7)
 
 ```solidity
-function cumulativeReward(uint256 uid_) public view returns (uint256)
+function getEpochNumber() public view returns (uint256)
 ```
 
 
-### rebaseMaxContributionReward (0x2611bf85)
+### cumulativeReward (0xc1e4db56)
 
 ```solidity
-function rebaseMaxContributionReward(
-    uint256 uid_
-) public view returns (uint256)
+function cumulativeReward() public view returns (uint256)
+```
+
+
+### rebaseMaxContributionReward (0xb11d91b7)
+
+```solidity
+function rebaseMaxContributionReward() public view returns (uint256)
 ```
 
 当前最新的社区奖励的最大值
 
 需要减去Bond invite奖励
-
-
-Parameters:
-
-| Name | Type    | Description |
-| :--- | :------ | :---------- |
-| uid_ | uint256 | 项目id        |
 
 
 Return values:
@@ -233,24 +238,15 @@ Return values:
 | :--- | :------ | :---------- |
 | [0]  | uint256 | 奖励最大值       |
 
-### rebaseMaxContributionRewardFromPrev (0x25c6cb14)
+### rebaseMaxContributionRewardFromPrev (0x745411c1)
 
 ```solidity
-function rebaseMaxContributionRewardFromPrev(
-    uint256 uid_
-) public view returns (uint256)
+function rebaseMaxContributionRewardFromPrev() public view returns (uint256)
 ```
 
 上轮epoch结束后的社区奖励的最大值
 
 需要减去Bond invite奖励
-
-
-Parameters:
-
-| Name | Type    | Description |
-| :--- | :------ | :---------- |
-| uid_ | uint256 | 项目id        |
 
 
 Return values:
@@ -297,14 +293,25 @@ Parameters:
 | burnAmt_      | uint256   | 销毁数量        |
 | releaseLevel_ | uint256   | 释放等级        |
 
-### updateMerkleRoot (0x85f15c13)
+### getClaim (0xcd27e0a5)
+
+```solidity
+function getClaim(
+    uint256 uid_,
+    address account_,
+    uint256 totalAmount_,
+    bytes32[] calldata merkleProof_
+) external view returns (bytes32, bytes32, bytes32)
+```
+
+
+### updateMerkleRoot (0xbe4d8f11)
 
 ```solidity
 function updateMerkleRoot(
-    uint256 uid_,
     bytes32 merkleRoot_,
     uint256 newTotalReward_,
-    uint256 epochIndex_
+    uint256 epochNumber_
 ) external onlyRootManager
 ```
 
@@ -315,7 +322,5 @@ Parameters:
 
 | Name            | Type    | Description |
 | :-------------- | :------ | :---------- |
-| uid_            | uint256 | 项目id        |
 | merkleRoot_     | bytes32 | 默克尔根        |
 | newTotalReward_ | uint256 | 本次更新的总奖励    |
-| epochIndex_     | uint256 | epochNumber |
