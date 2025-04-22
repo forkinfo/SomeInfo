@@ -876,7 +876,7 @@
   },
   {
     "inputs": [],
-    "name": "MAX_STAKE_PRINCIPAL",
+    "name": "MAX_STAKE_BASE",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1335,11 +1335,6 @@
       {
         "internalType": "uint256",
         "name": "totalClaimabledReward_",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rewardMax_",
         "type": "uint256"
       }
     ],
