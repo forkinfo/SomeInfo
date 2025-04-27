@@ -153,16 +153,16 @@ uint256 constant PRECISION = 100e3
 ### STAKE_BASE_MULTI (0x72252782)
 
 ```solidity
-uint256 constant STAKE_BASE_MULTI = 5
+uint256 constant STAKE_BASE_MULTI = 4
 ```
 
 
 ## State variables info
 
-### MAX_STAKE_PRINCIPAL (0x9e1d50c3)
+### MAX_STAKE_BASE (0x254538dc)
 
 ```solidity
-uint256 immutable MAX_STAKE_PRINCIPAL
+uint256 immutable MAX_STAKE_BASE
 ```
 
 
@@ -307,7 +307,14 @@ function initialize(address _destructionReceiver) public initializer
 function getInfo(
     uint256 uid_,
     address user_
-) external view returns (uint256 stakeBase_, uint256 contributorFactor_)
+)
+    external
+    view
+    returns (
+        uint256 stakeBase_,
+        uint256 contributorFactor_,
+        uint256 destructionFactor_
+    )
 ```
 
 获取社区信息
@@ -327,6 +334,7 @@ Return values:
 | :----------------- | :------ | :---------- |
 | stakeBase_         | uint256 | 质押基数        |
 | contributorFactor_ | uint256 | 能量因子        |
+| destructionFactor_ | uint256 | 销毁CSM的数量x4  |
 
 ### burnToken (0x8225b247)
 
@@ -514,8 +522,7 @@ function getUserStakingRecords(
     view
     returns (
         ReleasePool.Record[] memory rList_,
-        uint256 totalClaimabledReward_,
-        uint256 rewardMax_
+        uint256 totalClaimabledReward_
     )
 ```
 
@@ -537,7 +544,6 @@ Return values:
 | :--------------------- | :-------------------------- | :---------------- |
 | rList_                 | struct ReleasePool.Record[] | 收益列表信息，元素为Record  |
 | totalClaimabledReward_ | uint256                     | 总待领取奖励数量          |
-| rewardMax_             | uint256                     | 可领取奖励上限           |
 
 ### getUserContributionRecords (0x821c6007)
 
