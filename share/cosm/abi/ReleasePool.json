@@ -1250,11 +1250,6 @@
         "internalType": "uint256",
         "name": "totalClaimabledReward_",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rewardMax_",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1777,31 +1772,7 @@
         "type": "address"
       }
     ],
-    "name": "userClaimedContributionReward",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "userClaimedStakingReward",
+    "name": "userReleasedContributionReward",
     "outputs": [
       {
         "internalType": "uint256",
