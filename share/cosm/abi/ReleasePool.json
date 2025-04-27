@@ -1140,6 +1140,11 @@
         "internalType": "uint256",
         "name": "contributorFactor_",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "destructionFactor_",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
