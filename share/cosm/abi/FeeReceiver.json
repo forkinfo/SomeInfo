@@ -1,9 +1,25 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "USDT_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "uniswapV2Router_",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "rewardIdx",
         "type": "uint256"
@@ -15,38 +31,57 @@
         "type": "uint256"
       }
     ],
-    "name": "EventDistributeFee",
+    "name": "EventDistributeRewards",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
         "name": "rewardIdx",
         "type": "uint256"
       },
       {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
         "indexed": false,
-        "internalType": "struct FeeReceiver.RewardData[]",
-        "name": "infoList",
-        "type": "tuple[]"
+        "internalType": "uint256",
+        "name": "percent",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardV",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address[]",
+        "name": "partners",
+        "type": "address[]"
       }
     ],
-    "name": "EventDistributeFeeList",
+    "name": "EventDistributeRewardsWithPartners",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "csmAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "usdtAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EventTriggerSwap",
     "type": "event"
   },
   {
@@ -139,12 +174,103 @@
   },
   {
     "inputs": [],
+    "name": "ALPHA_PARTNER",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "CORE_PARTNER",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
     "outputs": [
       {
         "internalType": "bytes32",
         "name": "",
         "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PRECISION",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "RISING_PARTNER",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "UNISWAPV2ROUTER",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapV2Router",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "USDT",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VANGUARD_PARTNER",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -158,21 +284,24 @@
         "type": "uint256"
       },
       {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct FeeReceiver.RewardData[]",
-        "name": "infoList_",
-        "type": "tuple[]"
+        "internalType": "address[]",
+        "name": "risingPartners_",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "vanguardPartners_",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "corePartners_",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address[]",
+        "name": "alphaPartners_",
+        "type": "address[]"
       }
     ],
     "name": "distributeRewards",
@@ -242,10 +371,29 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiverWallet_",
+        "type": "address"
+      }
+    ],
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "receiverWallet",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -320,11 +468,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "csm_",
+        "name": "receiverWallet_",
         "type": "address"
       }
     ],
-    "name": "setRewardToken",
+    "name": "setReceiverWallet",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

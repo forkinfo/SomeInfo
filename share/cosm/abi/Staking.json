@@ -259,24 +259,6 @@
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "_recipient",
-        "type": "address"
-      }
-    ],
-    "name": "claim",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_uid",
-        "type": "uint256"
-      },
-      {
         "internalType": "bool",
         "name": "_trigger",
         "type": "bool"
@@ -425,16 +407,6 @@
         "internalType": "uint256",
         "name": "interest",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "sCSMInWarmup",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "claimable",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -728,6 +700,11 @@
       {
         "internalType": "uint256",
         "name": "_epochLength",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endBlockTime",
         "type": "uint256"
       }
     ],
