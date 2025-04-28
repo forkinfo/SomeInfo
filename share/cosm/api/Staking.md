@@ -251,15 +251,7 @@ Return values:
 function getStakeInfo(
     uint256 _uid,
     address _user
-)
-    external
-    view
-    returns (
-        uint256 principalAmt,
-        uint256 interest,
-        uint256 sCSMInWarmup,
-        bool claimable
-    )
+) external view returns (uint256 principalAmt, uint256 interest)
 ```
 
 获取质押信息
@@ -275,11 +267,10 @@ Parameters:
 
 Return values:
 
-| Name         | Type    | Description    |
-| :----------- | :------ | :------------- |
-| principalAmt | uint256 | 质押本金           |
-| interest     | uint256 | 收益             |
-| sCSMInWarmup | uint256 | warmup中的sCSM数量 |
+| Name         | Type    | Description |
+| :----------- | :------ | :---------- |
+| principalAmt | uint256 | 质押本金        |
+| interest     | uint256 | 收益          |
 
 ### getStakeAmount (0x0c2eb403)
 
@@ -328,22 +319,6 @@ Parameters:
 | _uid       | uint256 | 项目id              |
 | _amount    | uint256 | 质押数量              |
 | _recipient | address | CSM的owner @return |
-
-### claim (0xddd5e1b2)
-
-```solidity
-function claim(uint256 _uid, address _recipient) external
-```
-
-从Warmup中领取sCSM
-
-
-Parameters:
-
-| Name       | Type    | Description |
-| :--------- | :------ | :---------- |
-| _uid       | uint256 | 项目id        |
-| _recipient | address | 接受sCSM的地址   |
 
 ### unstake (0x5b64f391)
 
@@ -465,9 +440,12 @@ function setContract(
 
 sets the contract address for LP staking
         @param _contract address
-### updateEpoch (0x15ca0dc0)
+### updateEpoch (0x53fdfab0)
 
 ```solidity
-function updateEpoch(uint256 _epochLength) external onlyOwner
+function updateEpoch(
+    uint256 _epochLength,
+    uint256 _endBlockTime
+) external onlyOwner
 ```
 

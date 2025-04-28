@@ -215,10 +215,10 @@ struct ReleasePool.DestructionConfig[] interestDestructionConfig
 ```
 
 
-### userClaimedStakingReward (0x71909d3f)
+### userReleasedContributionReward (0xd1192093)
 
 ```solidity
-mapping(uint256 => mapping(address => uint256)) userClaimedStakingReward
+mapping(uint256 => mapping(address => uint256)) userReleasedContributionReward
 ```
 
 
@@ -247,13 +247,6 @@ mapping(uint256 => struct ReleasePool.Record) recordList
 
 ```solidity
 uint256 totalBurned
-```
-
-
-### userClaimedContributionReward (0x8eb6e04f)
-
-```solidity
-mapping(uint256 => mapping(address => uint256)) userClaimedContributionReward
 ```
 
 
@@ -510,6 +503,17 @@ Return values:
 | :---------- | :---------------------------------- | :------------------------ |
 | amountList_ | struct ReleasePool.RetDestruction[] | 销毁信息的数组，元素为RetDestruction |
 
+### getDestructionAmountByLevel (0x921a36fd)
+
+```solidity
+function getDestructionAmountByLevel(
+    address burnToken_,
+    uint256 amount_,
+    uint256 releaseLevel_
+) external view returns (uint256)
+```
+
+根据指定收益数量和释放等级，获取对应的销毁数量
 ### getUserStakingRecords (0xaece3585)
 
 ```solidity
@@ -557,8 +561,7 @@ function getUserContributionRecords(
     view
     returns (
         ReleasePool.Record[] memory rList_,
-        uint256 totalClaimabledReward_,
-        uint256 rewardMax_
+        uint256 totalClaimabledReward_
     )
 ```
 
@@ -580,7 +583,6 @@ Return values:
 | :--------------------- | :-------------------------- | :---------------- |
 | rList_                 | struct ReleasePool.Record[] | 收益列表信息，元素为Record  |
 | totalClaimabledReward_ | uint256                     | 总待领取奖励数量          |
-| rewardMax_             | uint256                     | 可领取奖励上限           |
 
 ### setInterestDestructionConfig (0xc2a56914)
 

@@ -23,21 +23,79 @@ struct RewardData {
 
 ## Events info
 
-### EventDistributeFee
+### EventDistributeRewards
 
 ```solidity
-event EventDistributeFee(uint256 indexed rewardIdx, uint256 totalReward)
+event EventDistributeRewards(uint256 rewardIdx, uint256 totalReward)
 ```
 
 
-### EventDistributeFeeList
+### EventDistributeRewardsWithPartners
 
 ```solidity
-event EventDistributeFeeList(uint256 indexed rewardIdx, FeeReceiver.RewardData[] infoList)
+event EventDistributeRewardsWithPartners(uint256 rewardIdx, uint256 percent, uint256 rewardV, address[] partners)
+```
+
+
+### EventTriggerSwap
+
+```solidity
+event EventTriggerSwap(uint256 csmAmount, uint256 usdtAmount)
+```
+
+
+## Constants info
+
+### PRECISION (0xaaf5eb68)
+
+```solidity
+uint256 constant PRECISION = 100
+```
+
+
+### RISING_PARTNER (0x95ada6c5)
+
+```solidity
+uint256 constant RISING_PARTNER = 6
+```
+
+四种Partner瓜分5%手续费的一半，就是USDT余额的50%
+### VANGUARD_PARTNER (0xdc0be886)
+
+```solidity
+uint256 constant VANGUARD_PARTNER = 10
+```
+
+
+### CORE_PARTNER (0x467ba88e)
+
+```solidity
+uint256 constant CORE_PARTNER = 14
+```
+
+
+### ALPHA_PARTNER (0xa72aba9f)
+
+```solidity
+uint256 constant ALPHA_PARTNER = 20
 ```
 
 
 ## State variables info
+
+### UNISWAPV2ROUTER (0xa8b62f7b)
+
+```solidity
+contract IUniswapV2Router immutable UNISWAPV2ROUTER
+```
+
+
+### USDT (0xc54e44eb)
+
+```solidity
+address immutable USDT
+```
+
 
 ### sellFee (0x2b14ca56)
 
@@ -53,6 +111,13 @@ mapping(uint256 => bool) rewardIsSend
 ```
 
 
+### receiverWallet (0x677342ab)
+
+```solidity
+address receiverWallet
+```
+
+
 ## Modifiers info
 
 ### onlyManager
@@ -64,10 +129,17 @@ modifier onlyManager()
 
 ## Functions info
 
-### initialize (0x8129fc1c)
+### constructor
 
 ```solidity
-function initialize() public initializer
+constructor(address USDT_, address uniswapV2Router_)
+```
+
+
+### initialize (0xc4d66de8)
+
+```solidity
+function initialize(address receiverWallet_) public initializer
 ```
 
 
@@ -78,32 +150,19 @@ function triggerSwap(uint256 amount) external
 ```
 
 
-### distributeRewards (0xf0ab029d)
+### distributeRewards (0x83cf2562)
 
 ```solidity
 function distributeRewards(
     uint256 rewardIdx_,
-    FeeReceiver.RewardData[] calldata infoList_
+    address[] calldata risingPartners_,
+    address[] calldata vanguardPartners_,
+    address[] calldata corePartners_,
+    address[] calldata alphaPartners_
 ) external onlyManager
 ```
 
 手续费分发
-
-
-Parameters:
-
-| Name       | Type                            | Description                                      |
-| :--------- | :------------------------------ | :----------------------------------------------- |
-| rewardIdx_ | uint256                         | 奖励唯一id, 同一id不可重复分发                               |
-| infoList_  | struct FeeReceiver.RewardData[] | 奖励信息。RewardData( address user; uint256 amount; ) |
-
-### setRewardToken (0x8aee8127)
-
-```solidity
-function setRewardToken(address csm_) external onlyManager
-```
-
-
 ### transferTokenOut (0xc15ded67)
 
 ```solidity
@@ -122,5 +181,12 @@ function transferTokenOut(
     address payable account_,
     uint256 amount_
 ) external onlyManager
+```
+
+
+### setReceiverWallet (0x22912cb2)
+
+```solidity
+function setReceiverWallet(address receiverWallet_) external onlyManager
 ```
 
