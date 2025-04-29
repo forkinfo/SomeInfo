@@ -11,12 +11,14 @@ contract FeeReceiver is AccessControlUpgradeable
 
 ## Structs info
 
-### RewardData
+### DistributedReward
 
 ```solidity
-struct RewardData {
-	address user;
-	uint256 amount;
+struct DistributedReward {
+	uint256 distributedIdx;
+	uint256 distributedTime;
+	uint256 distributedAmount;
+	uint256 recycleAmount;
 }
 ```
 
@@ -118,6 +120,13 @@ address receiverWallet
 ```
 
 
+### lastDistributedReward (0xac3b9d37)
+
+```solidity
+struct FeeReceiver.DistributedReward lastDistributedReward
+```
+
+
 ## Modifiers info
 
 ### onlyManager
@@ -146,7 +155,14 @@ function initialize(address receiverWallet_) public initializer
 ### triggerSwap (0xf8e5884b)
 
 ```solidity
-function triggerSwap(uint256 amount) external
+function triggerSwap(uint256 amount_) external
+```
+
+
+### swapTokenBalance (0xdeb629de)
+
+```solidity
+function swapTokenBalance(address token_) external onlyManager
 ```
 
 
