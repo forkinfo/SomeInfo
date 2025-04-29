@@ -385,6 +385,34 @@
   },
   {
     "inputs": [],
+    "name": "lastDistributedReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "distributedIdx",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "distributedTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "distributedAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "recycleAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "receiverWallet",
     "outputs": [
       {
@@ -499,6 +527,19 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "token_",
+        "type": "address"
+      }
+    ],
+    "name": "swapTokenBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address payable",
         "name": "account_",
         "type": "address"
@@ -541,7 +582,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "amount_",
         "type": "uint256"
       }
     ],
