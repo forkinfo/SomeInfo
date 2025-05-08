@@ -18,6 +18,13 @@ event EventAddReferrer(uint256 indexed uid, address indexed user, address referr
 ```
 
 
+### EventReplaceReferrer
+
+```solidity
+event EventReplaceReferrer(uint256 indexed uid, address indexed user, address newReferrer, address oldReferrer)
+```
+
+
 ## Constants info
 
 ### ROOT (0x5909c12f)
@@ -77,7 +84,18 @@ function addReferrer(uint256 uid_, address referrer_) external
 ```solidity
 function updateReferrer(
     uint256 uid_,
-    address[2][] calldata referers_
+    address[2][] calldata referrers_
 ) external onlyOwner
 ```
 
+
+### forceReplaceReferrer (0xfe7d6acc)
+
+```solidity
+function forceReplaceReferrer(
+    uint256 uid_,
+    address[3][] calldata replaceReferrers_
+) external onlyOwner
+```
+
+replaceReferrers_ = [[user, new referrer, old referrer], ]
