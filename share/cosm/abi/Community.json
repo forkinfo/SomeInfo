@@ -28,6 +28,37 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "uid",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newReferrer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldReferrer",
+        "type": "address"
+      }
+    ],
+    "name": "EventReplaceReferrer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "uint8",
         "name": "version",
@@ -83,6 +114,24 @@
       }
     ],
     "name": "addReferrer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "uid_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[3][]",
+        "name": "replaceReferrers_",
+        "type": "address[3][]"
+      }
+    ],
+    "name": "forceReplaceReferrer",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -208,7 +257,7 @@
       },
       {
         "internalType": "address[2][]",
-        "name": "referers_",
+        "name": "referrers_",
         "type": "address[2][]"
       }
     ],
