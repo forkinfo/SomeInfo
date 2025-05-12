@@ -5,7 +5,7 @@
 #### License: GPL-3.0
 
 ```solidity
-contract StakeBots is Ownable
+contract StakeBots is OwnableUpgradeable
 ```
 
 
@@ -72,6 +72,27 @@ address immutable sCSM
 ```
 
 
+### STAKEBOTS_BATCHMANAGER (0xd26540a7)
+
+```solidity
+address immutable STAKEBOTS_BATCHMANAGER
+```
+
+
+### LP_CSM_USDT (0xdf5f7551)
+
+```solidity
+address immutable LP_CSM_USDT
+```
+
+
+### LP_TOKEN0 (0xbc4575ef)
+
+```solidity
+address immutable LP_TOKEN0
+```
+
+
 ### Staking (0xf57df22e)
 
 ```solidity
@@ -121,6 +142,13 @@ contract IBondDepository USDT_BondDepository
 ```
 
 
+### botsLimit (0xd19f3567)
+
+```solidity
+struct IStakeBotsBatchManager.BotsLimit botsLimit
+```
+
+
 ## Modifiers info
 
 ### onlyReceiver
@@ -137,12 +165,34 @@ modifier onlyReceiveManager()
 ```
 
 
+### onlyBatchManager
+
+```solidity
+modifier onlyBatchManager()
+```
+
+
 ## Functions info
 
 ### constructor
 
 ```solidity
-constructor(address[] memory tokenList_, address[] memory contractsList_)
+constructor(
+    address[] memory tokenList_,
+    address uniswapV2Router_,
+    address stakeBotsBatchManager_
+)
+```
+
+
+### initialize (0x77a24f36)
+
+```solidity
+function initialize(
+    address receiver_,
+    address manager_,
+    address[] memory contractsList_
+) public initializer
 ```
 
 
@@ -160,11 +210,44 @@ function changeReceiveManager(address manager_) external onlyReceiveManager
 ```
 
 
+### setBotsLimit (0x8396d920)
+
+```solidity
+function setBotsLimit(
+    uint256 priceMax_,
+    uint256 priceMin_,
+    uint256 swapAmtMax_
+) external onlyBatchManager
+```
+
+
+### transferTokenOutWithMin (0x70924825)
+
+```solidity
+function transferTokenOutWithMin(
+    address token_,
+    address to_,
+    uint256 amount_
+) external onlyBatchManager
+```
+
+
 ### transferTokenOut (0xd1fcbae3)
 
 ```solidity
 function transferTokenOut(
     bool isAll_,
+    address token_,
+    address to_,
+    uint256 amount_
+) external onlyReceiver
+```
+
+
+### setApproveToOther (0x9ff7f8e7)
+
+```solidity
+function setApproveToOther(
     address token_,
     address to_,
     uint256 amount_
@@ -219,7 +302,7 @@ function getStakingInterest(uint256 uid_) external view returns (uint256)
 ```solidity
 function getLPBondInfoList(
     uint256 uid_
-) external view onlyOwner returns (IBondDepository.RetBondInfo[] memory)
+) external view returns (IBondDepository.RetBondInfo[] memory)
 ```
 
 获取LP债券列表
@@ -228,7 +311,7 @@ function getLPBondInfoList(
 ```solidity
 function getUSDTBondInfoList(
     uint256 uid_
-) external view onlyOwner returns (IBondDepository.RetBondInfo[] memory)
+) external view returns (IBondDepository.RetBondInfo[] memory)
 ```
 
 获取USDT债券列表
@@ -237,7 +320,7 @@ function getUSDTBondInfoList(
 ```solidity
 function getLPInviteBondInfo(
     uint256 uid_
-) external view onlyOwner returns (IBondDepository.RetBondInfo memory info_)
+) external view returns (IBondDepository.RetBondInfo memory info_)
 ```
 
 获取LP的直推债券列表
@@ -246,7 +329,7 @@ function getLPInviteBondInfo(
 ```solidity
 function getUSDTInviteBondInfo(
     uint256 uid_
-) external view onlyOwner returns (IBondDepository.RetBondInfo memory info_)
+) external view returns (IBondDepository.RetBondInfo memory info_)
 ```
 
 获取USDT的直推债券列表
@@ -296,26 +379,24 @@ Parameters:
 | amount_ | uint256 | 消耗的USDT数量               |
 | slide_  | uint256 | 在swap上的滑点，100% = 100_00 |
 
-### sellCSM (0x9a3d06cc)
+### sellCSM (0xc10587f7)
 
 ```solidity
-function sellCSM(
-    bool isAll_,
-    uint256 amount_,
-    uint256 slide_
-) external onlyOwner
+function sellCSM() external onlyReceiver
 ```
 
-卖CSM
+全卖CSM
+### sellCSMAndBuyLPBond (0xa5ae6078)
 
+```solidity
+function sellCSMAndBuyLPBond(
+    bool isAll_,
+    uint256 amount_,
+    uint256 slide_,
+    uint256 uid_
+) external onlyReceiver
+```
 
-Parameters:
-
-| Name    | Type    | Description             |
-| :------ | :------ | :---------------------- |
-| isAll_  | bool    | 是否将所有的CSM余额都购买USDT      |
-| amount_ | uint256 | 消耗的CSM数量                |
-| slide_  | uint256 | 在swap上的滑点，100% = 100_00 |
 
 ### stake (0x5db7f88c)
 
@@ -511,9 +592,40 @@ function setContract(
 ```
 
 
-### setApproveMax (0xe7d86b1c)
+### botsBuyCSM (0xd68155e1)
 
 ```solidity
-function setApproveMax() external onlyReceiveManager
+function botsBuyCSM(uint256 amount_, uint256 slide_) external onlyOwner
+```
+
+买CSM
+
+
+Parameters:
+
+| Name    | Type    | Description             |
+| :------ | :------ | :---------------------- |
+| amount_ | uint256 | 消耗的USDT数量               |
+| slide_  | uint256 | 在swap上的滑点，100% = 100_00 |
+
+### botsSellCSM (0x945d9a5f)
+
+```solidity
+function botsSellCSM(uint256 amount_) external onlyOwner
+```
+
+卖CSM
+
+
+Parameters:
+
+| Name    | Type    | Description |
+| :------ | :------ | :---------- |
+| amount_ | uint256 | 消耗的CSM数量    |
+
+### getCSMPrice (0x620e9d2a)
+
+```solidity
+function getCSMPrice() external view returns (uint256)
 ```
 
